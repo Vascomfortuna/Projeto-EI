@@ -1,0 +1,7 @@
+-Foi inicializada a estruturação e organização do projecto
+
+-Definiu-se os objectivos do projecto
+
+-Foram pesquisadas várias aplicações com funcionalidades similares ao projecto e avaliadas consoantemente
+
+-Foi criada a primeira versão do diagrama de casos de uso
