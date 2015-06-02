@@ -4,3 +4,4 @@ bdipg.pt -bliblioteca com os projectos dos anos passados
 moqups.com-site de criação de interfaces
 gliffy.com-diagramas
 https://pear.php.net/manual/en/package.fileformats.spreadsheet-excel-writer.intro.php - como fazer excel em php
+https://developers.google.com/maps/documentation/javascript/tutorial - JS API google
