@@ -1,14 +1,22 @@
 insert into utilizadores(nome,password,email) VALUES ('Vasco','123','vasco@hotmail.com');
 
-insert into repeticoes(idBoleia,EventoMeta,EventoValor) VALUES (1,'rep_inicio',UNIX_TIMESTAMP(CURDATE()));
-insert into repeticoes(idBoleia,EventoMeta,EventoValor) VALUES (1,'rep_ano_1','*');
-insert into repeticoes(idBoleia,EventoMeta,EventoValor) VALUES (1,'rep_mes_1','*');
-insert into repeticoes(idBoleia,EventoMeta,EventoValor) VALUES (1,'rep_semana_1','2');
-insert into repeticoes(idBoleia,EventoMeta,EventoValor) VALUES (1,'rep_diasemana_1','3');
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (1,'rep_inicio',UNIX_TIMESTAMP(CURDATE()));
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (1,'rep_ano_1','*');
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (1,'rep_mes_1','*');
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (1,'rep_semana_1','2');
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (1,'rep_diasemana_1','3');
+
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (2,'rep_inicio',UNIX_TIMESTAMP(CURDATE()));
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (2,'rep_ano_2','*');
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (2,'rep_mes_2','*');
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (2,'rep_semana_2','2');
+insert into repeticoes(idBoleia,EventoChave,EventoValor) VALUES (2,'rep_diasemana_2','5');
+
 
 select* from repeticoes;
+select* from boleias;
 
-insert into boleias(Data,HoraInicio,Duracao,idUtilizador) values ('2015-06-01','06:00:00',2,1);
+insert into boleias(Data,HoraInicio,Duracao,idUtilizador) values ('2015-06-11','06:00:00',2,1);
 
 SELECT EV . *
 FROM boleias AS EV
@@ -31,9 +39,13 @@ AND (
   OR EM4.EventoValor = '*'
 )
 AND (
-  EM5.EventoValor ='3'
+  EM5.EventoValor =concat(weekday(curdate()))
   OR EM5.EventoValor = '*'
 )
 AND EM1.EventoValor >= UNIX_TIMESTAMP(CURDATE());
 
 select UNIX_TIMESTAMP(CURDATE()) from dual;
+
+select concat(week(curdate())) from dual;
+
+select concat(weekday('2015-06-09')) from dual;

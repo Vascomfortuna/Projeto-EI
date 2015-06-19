@@ -1,0 +1,99 @@
+
+/* 
+    Created on : Jun 2, 2015, 3:53:19 PM
+    Author     : VascoF
+*/
+
+.color-primary-0 { color: #FFCF75 }	/* Main Primary color */
+.color-primary-1 { color: #FFFAF1 }
+.color-primary-2 { color: #FFE3AF }
+.color-primary-3 { color: #FFBD43 }
+.color-primary-4 { color: #FFA500 }
+
+.color-secondary-1-0 { color: #FFD975 }	/* Main Secondary color (1) */
+.color-secondary-1-1 { color: #FFFBF1 }
+.color-secondary-1-2 { color: #FFE9AF }
+.color-secondary-1-3 { color: #FFCB43 }
+.color-secondary-1-4 { color: #FFB800 }
+
+.color-secondary-2-0 { color: #FFC375 }	/* Main Secondary color (2) */
+.color-secondary-2-1 { color: #FFF9F1 }
+.color-secondary-2-2 { color: #FFDCAF }
+.color-secondary-2-3 { color: #FFAD43 }
+.color-secondary-2-4 { color: #FF9000 }
+
+body{
+    z-index: 0;
+}
+.translate{
+    background-color: #FFCF75;
+    position: absolute;
+    z-index: 1;
+    width:100%;
+}
+.criarboleia{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #FF9000;
+    position: absolute;
+    z-index: 1;
+    width:14%;
+    height: 5%;
+    background: #FFCF75;
+}
+#masterdiv{
+    width:100%;
+    background-color:#FFCF75;
+    
+}
+#login{
+    float:top;
+    vertical-align: top;
+    font-size: 18px;
+    background-color: #FFE9AF;
+}
+
+a{
+    color:#FFB800;
+}
+
+a:hover{
+    display: block;
+    color:#FFF9F1;
+    background:#FFB800;
+}
+
+
+
+.mapaboleia > tbody > tr > td{
+    padding:0px;
+    width:14%;
+    height: 14%;
+}
+
+
+table.mapaboleia > tbody > tr > td > a > div{
+     width:50px;
+    height:50px;
+}
+
+table.mapaboleia a{
+    display:block;
+    width:100%;
+    height:100%;
+    color:#000000;
+    
+}
+
+table.mapaboleia a:hover{
+    display:block;
+    width:100%;
+    height:100%;
+    color:#000000;
+    background:#FFDCAF;
+}
+
+
+
+
+    
