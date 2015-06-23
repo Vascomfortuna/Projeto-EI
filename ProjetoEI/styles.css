@@ -40,6 +40,7 @@ body{
     width:14%;
     height: 5%;
     background: #FFCF75;
+    vertical-align: bottom;
 }
 #masterdiv{
     width:100%;
@@ -72,8 +73,8 @@ a:hover{
 }
 
 
-table.mapaboleia > tbody > tr > td > a > div{
-     width:50px;
+.espaco{
+     width:100%;
     height:50px;
 }
 
@@ -82,16 +83,19 @@ table.mapaboleia a{
     width:100%;
     height:100%;
     color:#000000;
-    
 }
 
-table.mapaboleia a:hover{
-    display:block;
+div.espaco:hover{
     width:100%;
-    height:100%;
     color:#000000;
     background:#FFDCAF;
 }
+
+
+.vtop{
+    vertical-align:top;
+}
+
 
 
 
