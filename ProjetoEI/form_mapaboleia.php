@@ -1,8 +1,9 @@
 <?php
 include './functions.php';
 //error_reporting(0);
+$nPara = 9;
 $dias = array(0, 0, 0, 0, 0, 0);
-$startdate = filter_input(INPUT_GET, "d");
+$startdate = filter_input(INPUT_COOKIE, "d");
 date_default_timezone_set("Portugal");
 if ($startdate == null) {
     $startdate = strtotime("Monday");
@@ -38,42 +39,46 @@ if ($startdate == null) {
                     echo "</tr><tr><th>" . date("H:i", $h2) . "-" . date("H:i", $h3) . "</th>";
                 }
                 for ($i = 0; $i < 6; $i++) {
+                    $dia=date('Y-m-d', strtotime("+$i day", $startdate));
+                    $diasemana = (2 + $i);
                     if($y==0){
                     $haux1=date('H:i:s', $h1);
                     $haux2=date('H:i:s', $h2);
                     }else{
-                       $haux1=date('H:i:s', $h2);
+                    $haux1=date('H:i:s', $h2);
                     $haux2=date('H:i:s', $h3); 
                     }
                     if ($dias[$i] == 0) {
                         $rown = 0;
-                        
+                            //Vai buscar primeira boleia
                             $boleia = explode(",", BuscarBoleias(
-                                            date('Y-m-d', strtotime("+$i day", $startdate)), $haux1, $haux2
-                                            , (2 + $i)), -1);
+                                            $dia, $haux1, $haux2
+                                            , $diasemana,0), -1);
                         
-                        
+                        //Se encontrar boleias
                         if (empty($boleia)) {
                             echo"<td ><div class=\"espaco\" onclick=\"Aparecer('hid$z')\"></div>";
-                            CriarBoleia("hid$z");
+                            CriarBoleia("hid$z",$haux1,$dia);
                         } else {
-                            $sobre = explode(",", BuscarSobrepostas(
-                                            date('Y-m-d', strtotime("+$i day", $startdate)), date('H:i:s', $h1), $boleia[1]
-                                            , (2 + $i)), -1);
+                            //Vai buscar boleias sobrepostas
+                            $sobre = explode(",", BuscarBoleias(
+                                            $dia, $haux1, $boleia[1]
+                                            , $diasemana ,1), -1);
+                            //Se encontrar sobrepostas
                             if (!empty($sobre)) {
-                                $len = (count($sobre) / 5);
+                                $len = (count($sobre) / 9);
                                 for ($j = 0; $j < $len; $j++) {
-                                    if ($sobre[1+(5*$j)] > $boleia[1]) {
-                                        $aux = ContarEspacos($haux1, $sobre[1+(5*$j)]);
+                                    $cont = ($nPara * $j);
+                                    if ($sobre[1+$cont] > $boleia[1]) {
+                                        $aux = ContarEspacos($haux1, $sobre[1+$cont]);
                                     } else {
                                         $aux = ContarEspacos($haux1, $boleia[1]);
                                     }
                                     if($aux>$rown){
                                         $rown=$aux;
                                     }
-                                    $rownstart[$j]= ContarEspacos($haux1,$sobre[4+(5*$j)]);
+                                    $rownstart[$j]= ContarEspacos($haux1,$sobre[0+$cont]);
                                 }
-                                echo " dfhjk ". $rownstart[0] ;
                                 if ($rown > 1) {
                                 $dias[$i] = $rown - 1;
                                 }
@@ -82,22 +87,23 @@ if ($startdate == null) {
                                     } else {
                                         $he1 = ContarEspacos(date('H:i:s', $h2), $boleia[1])*50;
                                     }
-                                        $he2 = ContarEspacos($sobre[4], $sobre[1])*50;
+                                        $he2 = ContarEspacos($sobre[0+$cont], $sobre[1+$cont])*50;
                                 $w=(50*($len+1));
                                 echo"<td rowspan=\"$rown\">" .
                                 "<table class=\"table-bordered\"><tr><td class=\"vtop\">";
-                                echo"<div  onclick=\"Aparecer('hid$z')\" style=\"height:$he1"."px; width:$w"."px; background-color:$boleia[0]\" >$rown</div>";
-                                ColocarBoleia("hid$z", $boleia[0], $boleia[3]);
+                                echo"<div  onclick=\"Aparecer('hid$z')\" style=\"height:$he1"."px; width:$w"."px; background-color:$boleia[4]\" ></div>";
+                                ColocarBoleia("hid$z", $boleia[3], $boleia[4],$boleia[5],$boleia[6],$boleia[7],$boleia[8]);
                                 
                                 $z++;
                                 echo "</td>";
                                 for ($t = 0; $t < $len; $t++) {
+                                    $cont = ($nPara * $t);
                                     echo "<td class=\"vtop\" ><div style=\"width:$w"."px; height:".($rownstart[$t]*50)."px\"></div>";
                                     echo "<div  style=\"width:$w"."px; height:$he2"."px; background-color:"
-                                            . $sobre[0 + (5 * $t)]
+                                            . $sobre[4 + $cont]
                                             ."\" onclick=\"Aparecer('hid$z')"
-                                            ."\" >$rown</div>";
-                                    ColocarBoleia("hid$z", $sobre[0 + (5 * $t)], $sobre[3 + (5 * $t)]);
+                                            ."\" ></div>";
+                                    ColocarBoleia("hid$z", $sobre[3 + $cont], $sobre[4 + $cont],$sobre[5 + $cont],$sobre[6 + $cont],$sobre[7 + $cont],$sobre[8 + $cont]);
                                     $z++;
                                     echo "</td>";
                                 }
@@ -108,8 +114,8 @@ if ($startdate == null) {
                                 $dias[$i] = $rown - 1;
                             }
                             echo"<td rowspan=\"$rown\">"
-                            . "<div class=\"espaco\" onclick=\"Aparecer('hid$z')\" style=\"background-color:$boleia[0]\" ></div>";
-                            ColocarBoleia("hid$z", $boleia[0], $boleia[3]);
+                            . "<div class=\"espaco\" onclick=\"Aparecer('hid$z')\" style=\"background-color:$boleia[4]\" ></div>";
+                            ColocarBoleia("hid$z", $boleia[3], $boleia[4],$boleia[5],$boleia[6],$boleia[7],$boleia[8]);
                             }
                         }
                         echo "</td>";

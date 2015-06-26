@@ -1,15 +1,15 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <script>
-            function teste(){
-                x = '<?php echo "lol";?>';
-                document.getElementById("div").innerHTML=x;
-            }
-        </script>
     </head>
     <body>
-        <?php include './masterpage.php'; 
+        
+        <?php  
+       include './masterpage.php';
+        if(!(isset($_SESSION['idutilizador'])) || !(isset($_SESSION['nome']))){
+            header("Location: ./login.php"); 
+        }else{
+              
               $utilizador=  split(",",BuscarMembros());
               $startdate = strtotime("Monday");
                 if ($startdate > strtotime("today")){
@@ -35,8 +35,9 @@
         </div>
         <div class="container">
             <div class="container" id = "divmapa" style="width:100%; float:left">
-                <script>mapaBoleia();</script>    
+                <script>MapaBoleia();</script>    
         </div> 
         </div>
+        <?php } ?>
     </body>
 </html>

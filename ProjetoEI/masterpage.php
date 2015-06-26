@@ -28,8 +28,12 @@
         </div>
         <div class="container" style="width:100%">
         <div id="login" class="row" > 
-            <div class="col-xs-10 col-sm-2 text-center" style=""><a  href="">Registar</a></div>
-            <div class="col-xs-10  col-sm-2 text-center"><a href="">Iniciar sessão</a></div>
+            <?php if(!(isset($_SESSION['idutilizador'])) || !(isset($_SESSION['nome']))){ ?>
+            <div class="col-xs-10  col-sm-2 text-center"><a href="./login.php">Iniciar sessão</a></div>
+            <?php } else { ?>
+            <div class="col-xs-10 col-sm-2 text-center" style=""><a  href="#" onclick="Logout()">Logout</a></div>
+            <div class="col-xs-10  col-sm-2 text-center"><a href="./mapaboleia.php">Mapa das boleias</a></div>
+            <?php } ?>
             <div  class="col-xs-10 col-sm-2 text-center"><a href="#" onclick="Aparecer('tl');" align="center">
                     <img class="img-circle" src="imagens/mundo_icon.png" width='25px' height='25px'>Idioma</a></div>
         </div>
