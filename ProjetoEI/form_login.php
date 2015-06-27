@@ -5,7 +5,7 @@ include "./functions.php";
 $email = filter_input(INPUT_POST, "email");
 $password = filter_input(INPUT_POST, "password");
 
-$query = "select idutilizador,nome from utilizadores where email='$email' and password='$password'";
+$query = "select idutilizador,nome,cor from utilizadores where email='$email' and password='$password'";
 $result = ligacao($query);
 echo "dfshj".$result;
 if (!$result) {
@@ -19,4 +19,5 @@ if(mysql_num_rows($result) == 0){
     while ($row = mysql_fetch_assoc($result)) {
         $_SESSION["idutilizador"] = $row['idutilizador'];
         $_SESSION["nome"] = utf8_encode ($row['nome']);
+        $_SESSION["cor"] = $row['cor'];
     }

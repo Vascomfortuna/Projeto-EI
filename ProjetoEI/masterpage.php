@@ -16,13 +16,13 @@
 
                     <div class="col-xs-4 col-sm-2 text-center"><h1>Car Pooling</h1></div>
                     <div class="col-xs-10  col-sm-6"></div>
-                    <div class="col-xs-6  col-sm-4 "><br/><input type="text" name="pesqText">
+                   <!-- <div class="col-xs-6  col-sm-4 "><br/><input type="text" name="pesqText">
                         <select name="pesqOption">
                             <option value="m">Membros</option>
                             <option value="g" selected>Grupos</option>
                         </select>
                         <button type="submit">Pesquisar</button>
-                    </div>
+                    </div>-->
                 </form>
             </div>
         </div>
