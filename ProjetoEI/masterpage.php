@@ -33,6 +33,7 @@
             <?php } else { ?>
             <div class="col-xs-10 col-sm-2 text-center" style=""><a  href="#" onclick="Logout()">Logout</a></div>
             <div class="col-xs-10  col-sm-2 text-center"><a href="./mapaboleia.php">Mapa das boleias</a></div>
+            <div class="col-xs-10  col-sm-2 text-center"><a href="./conf.php">Configuração</a></div>
             <?php } ?>
             <div  class="col-xs-10 col-sm-2 text-center"><a href="#" onclick="Aparecer('tl');" align="center">
                     <img class="img-circle" src="imagens/mundo_icon.png" width='25px' height='25px'>Idioma</a></div>

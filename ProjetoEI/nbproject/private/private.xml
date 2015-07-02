@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/ProjetoEI/form_inserirpassageiro.php</file>
             <file>file:/C:/xampp/htdocs/ProjetoEI/masterpage.php</file>
+            <file>file:/C:/xampp/htdocs/ProjetoEI/form_eliminarboleia.php</file>
             <file>file:/C:/xampp/htdocs/ProjetoEI/form_login.php</file>
-            <file>file:/C:/xampp/htdocs/ProjetoEI/form_mapaboleia.php</file>
-            <file>file:/C:/xampp/htdocs/ProjetoEI/index.php</file>
-            <file>file:/C:/xampp/htdocs/ProjetoEI/styles.css</file>
+            <file>file:/C:/xampp/htdocs/ProjetoEI/conf.php</file>
+            <file>file:/C:/xampp/htdocs/ProjetoEI/form_alterarutilizador.php</file>
             <file>file:/C:/xampp/htdocs/ProjetoEI/functions.php</file>
-            <file>file:/C:/xampp/htdocs/ProjetoEI/form_eliminarpassageiro.php</file>
-            <file>file:/C:/xampp/htdocs/ProjetoEI/form_inserirboleia.php</file>
+            <file>file:/C:/xampp/htdocs/ProjetoEI/form_criardata.php</file>
             <file>file:/C:/xampp/htdocs/ProjetoEI/mapaboleia.php</file>
         </group>
     </open-files>

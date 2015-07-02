@@ -2,10 +2,9 @@
 
 include "./functions.php";
 $idboleia = (filter_input(INPUT_POST, "idboleia"));
-$idutilizador = (filter_input(INPUT_POST, "idutilizador"));
 
-$query = "update passageiros SET ativo=0 where "
-        . " idutilizador=$idutilizador and idboleia=$idboleia";
+$query = "update boleias SET ativo=0 where "
+        . "idboleia=$idboleia";
 $result = ligacao($query);
 if (!$result) {
             echo "<br/>Ocorreu um erro na query<br/>";

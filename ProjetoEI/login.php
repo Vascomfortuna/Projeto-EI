@@ -20,7 +20,7 @@
                     Email:
                 </td>
                 <td>
-                    <input type="email" width="30px" id="email"/>
+                    <input type="email" width="30px" id="email2"/>
                 </td>
             </tr>
             <tr>
@@ -28,14 +28,14 @@
                     Password:
                 </td>
                 <td>
-                    <input type="password" width="30px" id="password"/>
+                    <input type="password" width="30px" id="password2"/>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    <button type="submit" onclick="Login(document.getElementById('email').value,document.getElementById('password').value);">Entrar</button>
+                    <button type="submit" onclick="Login(document.getElementById('email2').value,document.getElementById('password2').value);">Entrar</button>
                 </td>
             </tr>
         </table>
