@@ -8,4 +8,5 @@ https://developers.google.com/maps/documentation/javascript/tutorial - JS API go
 http://paletton.com/#uid=50U0d0khhN31OYJ9+SAnEKpwpMF - cores para o design do website
 http://www.usability.gov/ -Processo de usabilidade
 http://stackoverflow.com/questions/5183630/calendar-recurring-repeating-events-best-storage-method - tabelas para eventos recorrentes
+https://support.office.com/en-sg/article/Headers-and-footers-for-document-sections-c7962194-f0f7-42af-b808-f99c34700e14-curso de word
 

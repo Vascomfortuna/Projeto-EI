@@ -1,0 +1,5 @@
+Ferramentas
+Devido à experiência e conhecimento do autor, a aplicação será construída e desenvolvida através das linguagens de programação PHP, Javascript e HTML. Para melhor estruturação e desenvolvimento do código, será utilizado o IDE NetBeans.
+De modo a tornar a aplicação responsiva a dispositivo móveis, será utilizado um template de CSS, chamado Bootstrap.
+A base de dados será construída na linguagem MySQL, utilizando a aplicação MySQL Workbench 6.3 para simplificar e auxiliar esta tarefa.
+Será utilizado o GitHub, um gestor de tarefas, para manter um repositório do projeto. Este repositório serve como histórico, controlo de versões e backup do projeto.
