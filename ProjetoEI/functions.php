@@ -93,8 +93,11 @@
         xmlhttp.send("" + str);
     }
 
-    function MapaBoleia()
+    function MapaBoleia(data)
     {
+        if(typeof data!= "undefined"){
+            document.cookie="d="+data;
+        }
         var xmlhttp;
         if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -265,14 +268,24 @@
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var x = xmlhttp.responseText.split("delimitador3/");
-                document.getElementById(id).innerHTML = "Data de início:"+x[2];
+                document.getElementById(id).innerHTML = x[2];
             }
         };
         xmlhttp.open("POST", "form_criardata.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send(""+str);
     }
-
+    
+   function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+} 
 
 
 
@@ -338,10 +351,12 @@ function CriarPassageiro($id, $idboleia) {
 }
 
 function CriarRepeticao($id,$suf) {
-    echo "<tr><td><button onclick=\"ColocarData('$suf$id');Aparecer('r$id');\">Repetir</button>"
+    echo "<tr><td><button onclick=\"ColocarData('ini$suf$id');ColocarData('fim$suf$id');Aparecer('r$id');\">Repetir</button>"
     . "<div id=\"r$id\" class=\"criarboleia container\" style=\"height:150px; width:340px; background-color:" . $_SESSION["cor"] . ";\" hidden >
                 <table class=\"table-bordered\">
-                    <tr><td id=\"$suf$id\"></td></tr>
+                    <tr><td>Data de início:</td><td id=\"ini$suf$id\"></td></tr>
+                    <tr><td>Data de fim:</td><td id=\"fim$suf$id\"></td></tr>
+                    <tr><td>Período</td><td><select><option>Diariamente</option><option>Semanalmente</option><option>Mensalmente</option></select></td></tr>
                     <tr><td><button onclick=\"\">OK</button>"
     . "<button onclick=\"Aparecer('r$id')\">Fechar</button></td></tr>
                 </table>
@@ -405,7 +420,7 @@ function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idbolei
   $pass
         <tr><td><button onclick=\"AlterarBoleia('$id','$idboleia')\">Alterar</button>
         ";
-         CriarRepeticao("$id","repini");
+         CriarRepeticao("$id","rep");
         echo "</td></tr>
         <tr><td><button onclick=\"EliminarBoleia('$idboleia')\">Eliminar</button>";
     } else {
@@ -466,7 +481,7 @@ function BuscarBoleias($dia, $horai, $horaf, $dsemana, $sobre) {
                 . "and '$horaf'<=b.horafim "
                 . "and $dsemana=b.diasemana "
                 . "and b.ativo=1 "
-                . "order by b.idboleia asc";
+                . "order by b.horainicio asc";
     } else {
         $bboleias = "select b.horainicio,b.horafim,b.nlugares,b.partida,b.destino,u.idutilizador,u.nome,u.iniciais,u.cor,b.idboleia from boleias b "
                 . "inner join utilizadores u on b.idutilizador=u.idutilizador " . "where b.data='$dia' "
@@ -474,7 +489,7 @@ function BuscarBoleias($dia, $horai, $horaf, $dsemana, $sobre) {
                 . "and '$horaf'>b.horainicio " .
                 "and $dsemana=b.diasemana "
                 . "and b.ativo=1 " .
-                " order by b.idboleia"
+                " order by b.horainicio"
                 . " asc limit 1,18446744073709551615";
     }
     $result = ligacao($bboleias);
@@ -558,5 +573,6 @@ function FazerHoras($id, $hora) {
     $str.="</select>";
     return $str;
 }
+
 
 

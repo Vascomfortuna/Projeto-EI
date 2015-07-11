@@ -10,7 +10,9 @@ if ($startdate == null) {
     if ($startdate > strtotime("today")) {
         $startdate = strtotime("-1 week", $startdate);
     }
+    
 }
+echo $startdate;
 ?>
 
 <html>
@@ -34,9 +36,9 @@ if ($startdate == null) {
             $h3 = strtotime(($x + 1) . ":00");
             for ($y = 0; $y < 2; $y++) {
                 if ($y == 0) {
-                    echo "<tr><th>" . date("H:i", $h1) . "-" . date("H:i", $h2) . "</th>";
+                    echo "<tr><th>" . date("H:i", $h1) . "</th>";
                 } else {
-                    echo "</tr><tr><th>" . date("H:i", $h2) . "-" . date("H:i", $h3) . "</th>";
+                    echo "</tr><tr><th>" . date("H:i", $h2)  . "</th>";
                 }
                 for ($i = 0; $i < 6; $i++) {
                     $dia=date('Y-m-d', strtotime("+$i day", $startdate));

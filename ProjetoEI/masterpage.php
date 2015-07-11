@@ -39,11 +39,7 @@
                     <img class="img-circle" src="imagens/mundo_icon.png" width='25px' height='25px'>Idioma</a></div>
         </div>
         </div>
-        <div id="tl" class="jumbotron translate" hidden><div id="google_translate_element" align="center"></div><script type="text/javascript">
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement({pageLanguage: 'pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
-            }
-            </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <div id="tl" class="jumbotron translate" hidden>
         </div>
     </body>
 </html>
