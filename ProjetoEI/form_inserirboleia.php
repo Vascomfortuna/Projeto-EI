@@ -1,5 +1,6 @@
 <?php
 include "./functions.php";
+echo "/delimitador5";
 $hora = date("H:i:s",strtotime(filter_input(INPUT_POST, "hora")));
 $horaf = date('H:i:s',strtotime("+30 minutes", strtotime($hora)));
 $dia = filter_input(INPUT_POST, "dia");

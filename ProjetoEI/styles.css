@@ -40,8 +40,8 @@ body{
     width:auto;
     height: auto;
     background: #FFCF75;
-    vertical-align: bottom;
-    
+    vertical-align: top;
+    margin-left: 9%;
 }
 #masterdiv{
     width:100%;
@@ -72,11 +72,16 @@ a:hover{
     width:14%;
     height: 50px;
 }
-
+.menumapa{
+    width:100%; 
+    vertical-align: bottom;
+    height: 200px;
+}
 
 .espaco{
      width:100%;
     height:50px;
+    float:left;
 }
 
 table.mapaboleia a{

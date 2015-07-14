@@ -1,7 +1,7 @@
 <?php
 include './functions.php';
 //error_reporting(0);
-$nPara = 10;
+$nPara = 11;
 $dias = array(0, 0, 0, 0, 0, 0);
 $startdate = filter_input(INPUT_COOKIE, "d");
 date_default_timezone_set("Portugal");
@@ -12,7 +12,6 @@ if ($startdate == null) {
     }
     
 }
-echo $startdate;
 ?>
 
 <html>
@@ -92,7 +91,7 @@ echo $startdate;
                                 echo"<div  onclick=\"Aparecer('hid$z')\" style=\"height:$he1"."px; width:$w"."px; background-color:$boleia[4]\" >";
                                 DadosBoleia($boleia[8], $boleia[2]);
                                 echo "</div>";
-                                ColocarBoleia("hid$z", $boleia[3], $boleia[4],$boleia[5],$boleia[6],$boleia[7],$boleia[8],$boleia[9],$boleia[0],$boleia[1]);
+                                ColocarBoleia("hid$z", $boleia[3], $boleia[4],$boleia[5],$boleia[6],$boleia[7],$boleia[8],$boleia[9],$boleia[0],$boleia[1],$boleia[11]);
                                 
                                 $z++;
                                 echo "</td>";
@@ -105,7 +104,7 @@ echo $startdate;
                                             ."\">";
                                     DadosBoleia($sobre[8 + $cont], $sobre[2 + $cont]);
                                     echo "</div>";
-                                    ColocarBoleia("hid$z", $sobre[3 + $cont], $sobre[4 + $cont],$sobre[5 + $cont],$sobre[6 + $cont],$sobre[7 + $cont],$sobre[8 + $cont],$sobre[9 + $cont],$sobre[0 + $cont],$sobre[1 + $cont]);
+                                    ColocarBoleia("hid$z", $sobre[3 + $cont], $sobre[4 + $cont],$sobre[5 + $cont],$sobre[6 + $cont],$sobre[7 + $cont],$sobre[8 + $cont],$sobre[9 + $cont],$sobre[0 + $cont],$sobre[1 + $cont],$sobre[10 + $cont]);
                                     $z++;
                                     echo "</td>";
                                 }
@@ -120,7 +119,7 @@ echo $startdate;
                             . "<div class=\"espaco\" onclick=\"Aparecer('hid$z')\" style=\"height:$he1"."px; background-color:$boleia[4]\" >";
                             DadosBoleia($boleia[8], $boleia[2]);
                             echo "</div>";
-                            ColocarBoleia("hid$z", $boleia[3], $boleia[4],$boleia[5],$boleia[6],$boleia[7],$boleia[8],$boleia[9],$boleia[0],$boleia[1]);
+                            ColocarBoleia("hid$z", $boleia[3], $boleia[4],$boleia[5],$boleia[6],$boleia[7],$boleia[8],$boleia[9],$boleia[0],$boleia[1],$boleia[10]);
                             }
                         }
                         echo "</td>";

@@ -164,6 +164,15 @@
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("" + str);
     }
+    function EliminarOpcao(idboleia,rep){
+        if(rep==''){
+            EliminarBoleia(idboleia);
+        }else if (confirm("Esta boleia faz parte de uma repetição. Quer eliminar todas as boleias associadas?")){
+            EliminarRepeticao(idboleia,rep);
+        }else {
+            EliminarBoleia(idboleia);
+        }
+    }
     function EliminarBoleia(idboleia)
     {
         if (confirm("Quer eliminar esta boleia?")) {
@@ -187,6 +196,30 @@
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp.send("" + str);
         }
+    }
+    function EliminarRepeticao(idboleia,idrep)
+    {
+        
+            var xmlhttp;
+            str = "idboleia=" + idboleia+"&idrep="+idrep;
+            if (window.XMLHttpRequest)
+            {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            }
+            else
+            {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    location.reload();
+                }
+            };
+            xmlhttp.open("POST", "form_eliminarrepeticao.php", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("" + str);
+        
     }
     function InserirPassageiro(idboleia,nota, vu)
     {
@@ -213,6 +246,31 @@
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("" + str);
     }
+    function InserirRep(dataini,dataf,horaini,horaf,rep,idboleia)
+    {
+        
+        str = "dataini="+dataini+"&dataf=" + dataf+"&horaini=" + horaini+"&horaf=" + horaf+"&rep=" + rep+"&idboleia=" + idboleia ;
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                
+                location.reload();
+            }
+        };
+        xmlhttp.open("POST", "form_inserirrepeticao.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("" + str);
+    }
+
 
     function EliminarPassageiro(idboleia, idutilizador)
     {
@@ -285,7 +343,18 @@
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
     }
     return "";
-} 
+    }
+    function BuscarData(id){
+        
+        var dia = document.getElementById("dia"+id).value;
+        var mes = document.getElementById("mes"+id).value;
+        var ano = document.getElementById("ano"+id).value;
+        var dat = ano+"-"+mes+"-"+dia;
+        alert(dat);
+        return dat;
+        
+    }
+ 
 
 
 
@@ -350,14 +419,14 @@ function CriarPassageiro($id, $idboleia) {
               </div>";
 }
 
-function CriarRepeticao($id,$suf) {
+function CriarRepeticao($id,$suf,$horaini,$horaf,$idboleia) {
     echo "<tr><td><button onclick=\"ColocarData('ini$suf$id');ColocarData('fim$suf$id');Aparecer('r$id');\">Repetir</button>"
     . "<div id=\"r$id\" class=\"criarboleia container\" style=\"height:150px; width:340px; background-color:" . $_SESSION["cor"] . ";\" hidden >
                 <table class=\"table-bordered\">
                     <tr><td>Data de início:</td><td id=\"ini$suf$id\"></td></tr>
                     <tr><td>Data de fim:</td><td id=\"fim$suf$id\"></td></tr>
-                    <tr><td>Período</td><td><select><option>Diariamente</option><option>Semanalmente</option><option>Mensalmente</option></select></td></tr>
-                    <tr><td><button onclick=\"\">OK</button>"
+                    <tr><td>Período</td><td><select id=\"rep$suf$id\"><option value=\"0\">Diariamente</option><option value=\"1\">Semanalmente</option value=\"2\"><option>Mensalmente</option></select></td></tr>
+                    <tr><td><button onclick=\"var a = BuscarData('ini$suf$id'); var b = BuscarData('fim$suf$id'); var c = document.getElementById('rep$suf$id').value; InserirRep(a,b,'$horaini','$horaf',c,$idboleia);\">OK</button>"
     . "<button onclick=\"Aparecer('r$id')\">Fechar</button></td></tr>
                 </table>
               </div>";
@@ -389,7 +458,7 @@ function CriarBoleia($id, $hora, $dia) {
               </div>";
 }
 
-function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idboleia, $idutilizador, $horaini, $horaf) {
+function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idboleia, $idutilizador, $horaini, $horaf,$rep) {
     $condutor = false;
     if ($idutilizador == $_SESSION['idutilizador']) {
         $condutor = true;
@@ -420,9 +489,9 @@ function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idbolei
   $pass
         <tr><td><button onclick=\"AlterarBoleia('$id','$idboleia')\">Alterar</button>
         ";
-         CriarRepeticao("$id","rep");
+         CriarRepeticao("$id","rep",$horaini,$horaf,$idboleia);
         echo "</td></tr>
-        <tr><td><button onclick=\"EliminarBoleia('$idboleia')\">Eliminar</button>";
+        <tr><td><button onclick=\"EliminarOpcao('$idboleia','$rep')\">Eliminar</button>";
     } else {
         echo "<div  id=\"$id\" style=\"background-color:$cor; height:$h" . "px;\" class=\"criarboleia container\" hidden >
                 <table class = \"table-condensed table-bordered \" style=\"background-color:$cor\">
@@ -474,7 +543,7 @@ function BuscarMembros() {
 
 function BuscarBoleias($dia, $horai, $horaf, $dsemana, $sobre) {
     if ($sobre == 0) {
-        $bboleias = "select b.horainicio,b.horafim,b.nlugares,b.partida,b.destino,u.idutilizador,u.nome,u.iniciais,u.cor,b.idboleia from boleias b "
+        $bboleias = "select b.horainicio,b.horafim,b.nlugares,b.partida,b.destino,u.idutilizador,u.nome,u.iniciais,u.cor,b.idboleia,b.boleias_idboleia from boleias b "
                 . "inner join utilizadores u on b.idutilizador=u.idutilizador "
                 . "where b.data='$dia' "
                 . "and '$horai'>=b.horainicio "
@@ -483,7 +552,7 @@ function BuscarBoleias($dia, $horai, $horaf, $dsemana, $sobre) {
                 . "and b.ativo=1 "
                 . "order by b.horainicio asc";
     } else {
-        $bboleias = "select b.horainicio,b.horafim,b.nlugares,b.partida,b.destino,u.idutilizador,u.nome,u.iniciais,u.cor,b.idboleia from boleias b "
+        $bboleias = "select b.horainicio,b.horafim,b.nlugares,b.partida,b.destino,u.idutilizador,u.nome,u.iniciais,u.cor,b.idboleia,b.boleias_idboleia from boleias b "
                 . "inner join utilizadores u on b.idutilizador=u.idutilizador " . "where b.data='$dia' "
                 . "and '$horai'<=b.horainicio "
                 . "and '$horaf'>b.horainicio " .
@@ -496,7 +565,7 @@ function BuscarBoleias($dia, $horai, $horaf, $dsemana, $sobre) {
     $r = "";
     while ($row = mysql_fetch_assoc($result)) {
         $r.= $row['horainicio'] . "," . $row['horafim'] . "," . $row['iniciais'] . "," . $row['nome'] . "," . $row['cor'] . ","
-                . $row['partida'] . "," . $row['destino'] . "," . $row['nlugares'] . "," . $row['idboleia'] . "," . $row['idutilizador'] . ",";
+                . $row['partida'] . "," . $row['destino'] . "," . $row['nlugares'] . "," . $row['idboleia'] . "," . $row['idutilizador'] . "," . $row['boleias_idboleia'] . ",";
     }
 
     return $r;

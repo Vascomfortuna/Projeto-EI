@@ -17,9 +17,9 @@
                 if ($startdate > strtotime("today")){
                    $startdate = strtotime("-1 week", $startdate); 
                 }
-              echo $startdate;
         ?>
-        <div class="container" style="width:12%; float:left">
+        <div class="container" style="float:left; width:12%;">
+        <div class="menumapa">
             <h2>Membros</h2>
             <table class="table">
                 <tr>
@@ -33,11 +33,14 @@
                     }?>
             </table>
         </div>
-        <div class="container" style="width:12%; float:left">
+        
+        <div class=" menumapa" >
             <button onclick="var x=getCookie('d') - (7 * 24 * 60 * 60);MapaBoleia(x);">Semana Anterior</button>
-            <button onclick="var y=Number(getCookie('d')) + (7 * 24 * 60 * 60);MapaBoleia(y);">Semana Seguinte</button></div>
+            <button onclick="var y=Number(getCookie('d')) + (7 * 24 * 60 * 60);MapaBoleia(y);">Semana Seguinte</button>
+        </div>
+            </div>
         <div class="container">
-            <div class="container" id = "divmapa" style="width:100%; float:right">
+            <div class="container" id = "divmapa" style="width:100%; ">
                 <script> var d=<?php echo $startdate;?>; MapaBoleia(d);</script>    
         </div> 
         </div>
