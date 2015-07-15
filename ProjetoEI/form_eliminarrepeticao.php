@@ -3,7 +3,6 @@
 include "./functions.php";
 $idboleia = (filter_input(INPUT_POST, "idboleia"));
 $idrep = (filter_input(INPUT_POST, "idrep"));
-echo "/delimitador5";
 $query = "delete from boleias where boleias_idboleia=$idrep and idboleia!=$idrep";
 $result = ligacao($query);
 if (!$result) {

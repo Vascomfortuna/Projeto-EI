@@ -64,11 +64,11 @@
     function AlterarUtilizador()
     {
         var xmlhttp;
-        str =  "&partida=" + document.getElementById("partida").value + "&destino=" + document.getElementById("destino").value
+        str = "&partida=" + document.getElementById("partida").value + "&destino=" + document.getElementById("destino").value
                 + "&voip=" + document.getElementById("voip").value + "&nome=" + document.getElementById("nome").value + "&nlugares="
                 + document.getElementById("nlugares").value + "&contacto=" + document.getElementById("contacto").value
-        + "&cor=" + document.getElementById("cor").value
-+ "&password=" + document.getElementById("password").value;
+                + "&cor=" + document.getElementById("cor").value
+                + "&password=" + document.getElementById("password").value;
         if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -81,10 +81,10 @@
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var x = xmlhttp.responseText.split("delimitador2/");
-                if(typeof x[2]!=='undefined'){
-                  document.getElementById("divmsg").innerHTML = x[2];  
-                }else{
-                    document.getElementById("divmsg").innerHTML = "Alteração efectuada."; 
+                if (typeof x[2] !== 'undefined') {
+                    document.getElementById("divmsg").innerHTML = x[2];
+                } else {
+                    document.getElementById("divmsg").innerHTML = "Alteração efectuada.";
                 }
             }
         };
@@ -95,8 +95,8 @@
 
     function MapaBoleia(data)
     {
-        if(typeof data!= "undefined"){
-            document.cookie="d="+data;
+        if (typeof data != "undefined") {
+            document.cookie = "d=" + data;
         }
         var xmlhttp;
         if (window.XMLHttpRequest)
@@ -164,12 +164,12 @@
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("" + str);
     }
-    function EliminarOpcao(idboleia,rep){
-        if(rep==''){
+    function EliminarOpcao(idboleia, rep) {
+        if (rep == '') {
             EliminarBoleia(idboleia);
-        }else if (confirm("Esta boleia faz parte de uma repetição. Quer eliminar todas as boleias associadas?")){
-            EliminarRepeticao(idboleia,rep);
-        }else {
+        } else if (confirm("Esta boleia faz parte de uma repetição. Quer eliminar todas as boleias associadas?")) {
+            EliminarRepeticao(idboleia, rep);
+        } else {
             EliminarBoleia(idboleia);
         }
     }
@@ -197,33 +197,33 @@
             xmlhttp.send("" + str);
         }
     }
-    function EliminarRepeticao(idboleia,idrep)
+    function EliminarRepeticao(idboleia, idrep)
     {
-        
-            var xmlhttp;
-            str = "idboleia=" + idboleia+"&idrep="+idrep;
-            if (window.XMLHttpRequest)
-            {// code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            }
-            else
-            {// code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
 
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    location.reload();
-                }
-            };
-            xmlhttp.open("POST", "form_eliminarrepeticao.php", true);
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("" + str);
-        
+        var xmlhttp;
+        str = "idboleia=" + idboleia + "&idrep=" + idrep;
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                location.reload();
+            }
+        };
+        xmlhttp.open("POST", "form_eliminarrepeticao.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("" + str);
+
     }
-    function InserirPassageiro(idboleia,nota, vu)
+    function InserirPassageiro(idboleia, nota, vu)
     {
-        str = "idboleia=" + idboleia +  "&vu=" + vu;
+        str = "idboleia=" + idboleia + "&vu=" + vu;
         if (nota !== "") {
             str += "&nota=" + nota;
         }
@@ -246,10 +246,10 @@
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("" + str);
     }
-    function InserirRep(dataini,dataf,horaini,horaf,rep,idboleia)
+    function InserirRep(dataini, dataf, horaini, horaf, rep, idboleia)
     {
-        
-        str = "dataini="+dataini+"&dataf=" + dataf+"&horaini=" + horaini+"&horaf=" + horaf+"&rep=" + rep+"&idboleia=" + idboleia ;
+
+        str = "dataini=" + dataini + "&dataf=" + dataf + "&horaini=" + horaini + "&horaf=" + horaf + "&rep=" + rep + "&idboleia=" + idboleia;
         var xmlhttp;
         if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -262,7 +262,7 @@
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                
+
                 location.reload();
             }
         };
@@ -297,23 +297,48 @@
             xmlhttp.send("" + str);
         }
     }
-     function ColocarData(id)
-    {
+    function InserirBoleiaData(data,id){
         var xmlhttp;
-        
-        var dia = document.getElementById("dia"+id);        
-        if(dia===null){
-            d = new Date();
-            diaf = d.getDate();
-             mesf = d.getMonth()+1;
-             anof = d.getFullYear();
-        }else{
-            diaf = document.getElementById("dia"+id).value; 
-             mesf = document.getElementById("mes"+id).value;
-             anof = document.getElementById("ano"+id).value;
+        horaini = "" + document.getElementById("horaini" + id).value + document.getElementById("minini" + id).value;
+        horaf = "" + document.getElementById("horaf" + id).value + document.getElementById("minf" + id).value;
+        str = "horaini=" + horaini + "&horaf=" + horaf + "&data="+data;
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        str= "id="+id+"&dia="+diaf+"&mes="+mesf+"&ano="+anof;
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var x = xmlhttp.responseText.split("/delimitador5");
+                alert(x[2]);
+                location.reload();
+            }
+        };
+        xmlhttp.open("POST", "form_inserirboleiadata.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("" + str);
+    }
+    function ColocarData(id)
+    {
+        var xmlhttp;
+
+        var dia = document.getElementById("dia" + id);
+        if (dia === null) {
+            d = new Date();
+            diaf = d.getDate();
+            mesf = d.getMonth() + 1;
+            anof = d.getFullYear();
+        } else {
+            diaf = document.getElementById("dia" + id).value;
+            mesf = document.getElementById("mes" + id).value;
+            anof = document.getElementById("ano" + id).value;
+        }
+
+        str = "id=" + id + "&dia=" + diaf + "&mes=" + mesf + "&ano=" + anof;
         if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -331,30 +356,43 @@
         };
         xmlhttp.open("POST", "form_criardata.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send(""+str);
+        xmlhttp.send("" + str);
     }
-    
-   function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ')
+                c = c.substring(1);
+            if (c.indexOf(name) == 0)
+                return c.substring(name.length, c.length);
+        }
+        return "";
     }
-    return "";
-    }
-    function BuscarData(id){
-        
-        var dia = document.getElementById("dia"+id).value;
-        var mes = document.getElementById("mes"+id).value;
-        var ano = document.getElementById("ano"+id).value;
-        var dat = ano+"-"+mes+"-"+dia;
+    function BuscarData(id) {
+
+        var dia = document.getElementById("dia" + id).value;
+        var mes = document.getElementById("mes" + id).value;
+        var ano = document.getElementById("ano" + id).value;
+        var dat = ano + "-" + mes + "-" + dia;
         alert(dat);
         return dat;
-        
+
     }
- 
+    
+    
+    function EliminarOpcao(idboleia, rep) {
+        if (rep == '') {
+            EliminarBoleia(idboleia);
+        } else if (confirm("Esta boleia faz parte de uma repetição. Quer eliminar todas as boleias associadas?")) {
+            EliminarRepeticao(idboleia, rep);
+        } else {
+            EliminarBoleia(idboleia);
+        }
+    }
+
 
 
 
@@ -376,31 +414,32 @@ function OptionsMembros() {
     }
     return $r;
 }
-function CriarDataOpcoes($dia,$mes,$ano){
-    $opdia = cal_days_in_month(CAL_GREGORIAN,$mes,$ano);
-    $str=  ["","",""];
-    for($i=1;$i<=$opdia;$i++){
-        if($i != $dia){
-        $str[0] .= "<option value=\"$i\">$i</option>";
-        }else{
-         $str[0] .= "<option selected value=\"$i\">$i</option>";  
+
+function CriarDataOpcoes($dia, $mes, $ano) {
+    $opdia = cal_days_in_month(CAL_GREGORIAN, $mes, $ano);
+    $str = ["", "", ""];
+    for ($i = 1; $i <= $opdia; $i++) {
+        if ($i != $dia) {
+            $str[0] .= "<option value=\"$i\">$i</option>";
+        } else {
+            $str[0] .= "<option selected value=\"$i\">$i</option>";
         }
     }
-    for($i=1;$i<=12;$i++){
-        if($i != $mes){
-        $str[1] .= "<option value=\"$i\">$i</option>";
-        }else{
-         $str[1] .= "<option selected value=\"$i\">$i</option>";  
+    for ($i = 1; $i <= 12; $i++) {
+        if ($i != $mes) {
+            $str[1] .= "<option value=\"$i\">$i</option>";
+        } else {
+            $str[1] .= "<option selected value=\"$i\">$i</option>";
         }
     }
-    for($i=2000;$i<=2050;$i++){
-        if($i != $ano){
-        $str[2] .= "<option value=\"$i\">$i</option>";
-        }else{
-         $str[2] .= "<option selected value=\"$i\">$i</option>";  
+    for ($i = 2000; $i <= 2050; $i++) {
+        if ($i != $ano) {
+            $str[2] .= "<option value=\"$i\">$i</option>";
+        } else {
+            $str[2] .= "<option selected value=\"$i\">$i</option>";
         }
     }
-    return $str; 
+    return $str;
 }
 
 function CriarPassageiro($id, $idboleia) {
@@ -419,7 +458,7 @@ function CriarPassageiro($id, $idboleia) {
               </div>";
 }
 
-function CriarRepeticao($id,$suf,$horaini,$horaf,$idboleia) {
+function CriarRepeticao($id, $suf, $horaini, $horaf, $idboleia) {
     echo "<tr><td><button onclick=\"ColocarData('ini$suf$id');ColocarData('fim$suf$id');Aparecer('r$id');\">Repetir</button>"
     . "<div id=\"r$id\" class=\"criarboleia container\" style=\"height:150px; width:340px; background-color:" . $_SESSION["cor"] . ";\" hidden >
                 <table class=\"table-bordered\">
@@ -438,8 +477,8 @@ function DadosBoleia($idboleia, $iniciais) {
     $len = count($p) / $nPara;
     $pass = "";
     for ($i = 0; $i < $len; $i++) {
-        $pointer = $i  * $nPara +2;
-        $pass.="<tr><td><label>Passageiro " . (1+ $i) . ": " . $p[$pointer] . "</label></td></tr>";
+        $pointer = $i * $nPara + 2;
+        $pass.="<tr><td><label>Passageiro " . (1 + $i) . ": " . $p[$pointer] . "</label></td></tr>";
     }
     echo "<table class=\"table-bordered\" align=\"center\">"
     . "<tr><th><label>Condutor: $iniciais</label></th></tr>"
@@ -458,7 +497,7 @@ function CriarBoleia($id, $hora, $dia) {
               </div>";
 }
 
-function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idboleia, $idutilizador, $horaini, $horaf,$rep) {
+function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idboleia, $idutilizador, $horaini, $horaf, $rep) {
     $condutor = false;
     if ($idutilizador == $_SESSION['idutilizador']) {
         $condutor = true;
@@ -471,7 +510,7 @@ function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idbolei
     $colocar = true;
     for ($i = 0; $i < $len; $i++) {
         $pointer = $i * $nPara;
-        $pass.="<tr><td><label>Passageiro " . (1+$i) . ": " . utf8_encode($p[$pointer]) . "</label></td></tr>";
+        $pass.="<tr><td><label>Passageiro " . (1 + $i) . ": " . utf8_encode($p[$pointer]) . "</label></td></tr>";
         if ($p[$pointer + 1] == $_SESSION['idutilizador']) {
             $colocar = false;
         }
@@ -489,7 +528,7 @@ function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idbolei
   $pass
         <tr><td><button onclick=\"AlterarBoleia('$id','$idboleia')\">Alterar</button>
         ";
-         CriarRepeticao("$id","rep",$horaini,$horaf,$idboleia);
+        CriarRepeticao("$id", "rep", $horaini, $horaf, $idboleia);
         echo "</td></tr>
         <tr><td><button onclick=\"EliminarOpcao('$idboleia','$rep')\">Eliminar</button>";
     } else {
@@ -503,8 +542,9 @@ function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idbolei
   $pass";
 
         if ($colocar && (($nlugares - $len) > 0)) {
-            echo "<tr><td><button onclick=Aparecer('pass$id')>Entrar</button> </td></tr>";
+            echo "<tr><td><button onclick=Aparecer('pass$id')>Entrar</button>";
             CriarPassageiro("pass$id", $idboleia);
+            echo " </td></tr>";
         } else if (!$colocar) {
             echo "<tr><td><button onclick=EliminarPassageiro($idboleia," . $_SESSION['idutilizador'] . ")>Sair</button></td></tr>";
         }
@@ -643,5 +683,14 @@ function FazerHoras($id, $hora) {
     return $str;
 }
 
-
-
+function InserirBoleiaData($data,$id) {
+    return "<button onclick=\"Aparecer('$id');\">+</button>"
+    . "<div id=\"$id\" class=\"criarboleia container\" style=\" background-color:" . $_SESSION["cor"] . ";\" hidden >
+                <table class=\"table-bordered\">
+              " . "<tr><td>Hora início: " . FazerHoras("ini$id", "07:00") . "</td></tr>"
+                . "<tr><td>Hora fim: " . FazerHoras("f$id", "07:30") . "</td></tr>" .
+                  "<tr><td><button onclick=\"InserirBoleiaData('$data','$id')\">OK</button>"
+                . "<button onclick=\"Aparecer('$id')\">Fechar</button></td></tr>
+                </table>
+              </div>";
+}

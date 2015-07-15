@@ -20,12 +20,17 @@ if ($startdate == null) {
     <table class="table table-bordered table-condensed mapaboleia">
         <tr>
             <th>Hora</th>
-            <th>Segunda</th>
-            <th>Terça</th>
-            <th>Quarta</th>
-            <th>Quinta</th>
-            <th>Sexta</th>
-            <th>Sábado</th>
+            <?php 
+            $hd = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+            $dataAux = $startdate;
+            $r=0;
+            foreach ($hd as $value) {
+                echo "<th>$value".InserirBoleiaData(date("Y-m-d", $dataAux),"ibd$r")."</th>";
+                $dataAux = strtotime("+1 day", $dataAux);
+                $r++;
+            }
+            ?>
+            
         </tr>
         <?php
         $z = 0;
@@ -84,14 +89,14 @@ if ($startdate == null) {
                                 $dias[$i] = $rown - 1;
                                 }
                                  $he1 = ContarEspacos($haux1, $boleia[1])*55;
-                                        $he2 = ContarEspacos($sobre[0+$cont], $sobre[1+$cont])*55;
+                                $he2 = ContarEspacos($sobre[0+$cont], $sobre[1+$cont])*55;
                                 $w=(50*($len+1));
                                 echo"<td rowspan=\"$rown\">" .
                                 "<table class=\"table-bordered\" ><tr><td class=\"vtop\">";
                                 echo"<div  onclick=\"Aparecer('hid$z')\" style=\"height:$he1"."px; width:$w"."px; background-color:$boleia[4]\" >";
                                 DadosBoleia($boleia[8], $boleia[2]);
                                 echo "</div>";
-                                ColocarBoleia("hid$z", $boleia[3], $boleia[4],$boleia[5],$boleia[6],$boleia[7],$boleia[8],$boleia[9],$boleia[0],$boleia[1],$boleia[11]);
+                                ColocarBoleia("hid$z", $boleia[3], $boleia[4],$boleia[5],$boleia[6],$boleia[7],$boleia[8],$boleia[9],$boleia[0],$boleia[1],$boleia[10]);
                                 
                                 $z++;
                                 echo "</td>";
