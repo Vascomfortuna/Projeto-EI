@@ -9,4 +9,7 @@ http://paletton.com/#uid=50U0d0khhN31OYJ9+SAnEKpwpMF - cores para o design do we
 http://www.usability.gov/ -Processo de usabilidade
 http://stackoverflow.com/questions/5183630/calendar-recurring-repeating-events-best-storage-method - tabelas para eventos recorrentes
 https://support.office.com/en-sg/article/Headers-and-footers-for-document-sections-c7962194-f0f7-42af-b808-f99c34700e14-curso de word
-
+http://24ways.org/2010/calculating-color-contrast/ -contraste das cores
+http://www.colorschemedesigner.com/blog/usage/ - uso das cores
+http://paletton.com/#uid=12P0u0kllllaFw0g0qFqFg0w0aF-segundo design
+http://snipplr.com/ - excertos de código úteis
