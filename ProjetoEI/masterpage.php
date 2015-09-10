@@ -34,12 +34,15 @@
             <div class="col-xs-10 col-sm-2 text-center" style=""><a  href="#" onclick="Logout()">Logout</a></div>
             <div class="col-xs-10  col-sm-2 text-center"><a href="./mapaboleia.php">Mapa das boleias</a></div>
             <div class="col-xs-10  col-sm-2 text-center"><a href="./conf.php">Configuração</a></div>
+            <div class="col-xs-10  col-sm-2 text-center"><a href="./alteracoes.php">Alterações</a></div>
+            <div class="col-xs-10  col-sm-2 text-center"><a href="./estatisticas.php">Estatisticas</a></div>
+            <?php } 
+            if(!(empty($_SESSION['idutilizador']))&&$_SESSION['idutilizador']=='1'){?>
+            <div  class="col-xs-10 col-sm-2 text-center"><a href="administracao.php" onclick="Aparecer('tl');" align="center">
+                    Administração</a></div>
             <?php } ?>
-            <div  class="col-xs-10 col-sm-2 text-center"><a href="#" onclick="Aparecer('tl');" align="center">
-                    <img class="img-circle" src="imagens/mundo_icon.png" width='25px' height='25px'>Idioma</a></div>
         </div>
         </div>
-        <div id="tl" class="jumbotron translate" hidden>
-        </div>
+        
     </body>
 </html>

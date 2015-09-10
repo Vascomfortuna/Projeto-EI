@@ -1,5 +1,5 @@
 <?php
-
+echo "/delimitador5";
 include "./functions.php";
 $idboleia = (filter_input(INPUT_POST, "idboleia"));
 $idutilizador = $_SESSION['idutilizador'];
@@ -10,9 +10,14 @@ if (empty($nota)) {
 } else {
     $nota = "'$nota'";
 }
-$query = "select idutilizador,idboleia from passageiros where idboleia=$idboleia and idutilizador=$idutilizador";
+$query = "select idutilizador from passageiros where idboleia=$idboleia and idutilizador=$idutilizador";
+
 $result = ligacao($query);
-if (is_resource($result) || !($result) || empty($result)) {
+    $r = "";
+    while ($row = mysql_fetch_assoc($result)) {
+        $r.= $row['idutilizador'];
+    }
+if (empty($r)) {
 
     $query2 = "insert into passageiros (idutilizador,idboleia,nota,ViagemUnica) "
             . "VALUES ('$idutilizador','$idboleia',$nota,$vu)";

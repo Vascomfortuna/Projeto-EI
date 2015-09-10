@@ -12,10 +12,7 @@ if (empty($nlugares)) {
 } 
 $query = "UPDATE boleias SET partida='$partida', destino='$destino', horainicio='$horaini', horafim='$horaf', nlugares=$nlugares where idboleia = $idboleia";
 $result = ligacao($query);
-if(mysql_num_rows($result) == 0){
-    echo "delimitador/Password errada.";
-    exit;
-}
+
 if (!$result) {
             echo "<br/>Ocorreu um erro na query<br/>";
             echo 'MySQL Error: ' . mysql_error();

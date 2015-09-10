@@ -11,7 +11,8 @@ if (!$result) {
             echo 'MySQL Error: ' . mysql_error();
             exit;
         }else{
-            echo "sucess;";
+            echo "success";
+        
         }
         
 
