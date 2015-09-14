@@ -41,6 +41,6 @@ if($form=="0"){?>
     $opt=  OptionsMembros();?>
 <table class="table table-bordered">
     <tr><td><select id="eliutilizador"><?php echo $opt;  ?></select></td></tr>
-    <tr><td><button onclick="EliminarUtilizador(document.getElementById('eliutilizador').value)">Eliminar</button></td></tr>
+    <tr><td><button onclick="EliminarUtilizador(document.getElementById('eliutilizador').value,document.getElementById('eliutilizador').options[document.getElementById('eliutilizador').selectedIndex ].text)">Eliminar</button></td></tr>
 </table>
 <?php } ?>

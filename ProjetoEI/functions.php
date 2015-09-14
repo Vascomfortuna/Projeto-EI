@@ -120,7 +120,7 @@
                 if (typeof x[2] !== 'undefined') {
                     document.getElementById("adminmsg").innerHTML = x[2];
                 } else {
-                    InserirAlteracao("O administrador alterou o utilizador " +nome +".","");
+                    InserirAlteracao("O administrador alterou o utilizador " +nome +".","",0);
                     document.getElementById("adminmsg").innerHTML = "Alteração efectuada.";
                 }
             }
@@ -169,7 +169,7 @@
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                InserirAlteracao("O utilizador inseriu uma boleia na data "+dia+" com a hora inicial " + hora+".","");
+                InserirAlteracao("O utilizador inseriu uma boleia na data "+dia+" com a hora inicial " + hora+".","",1);
             }
         };
         xmlhttp.open("POST", "form_inserirboleia.php", true);
@@ -194,7 +194,7 @@
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-               InserirAlteracao("A boleia com o id " + idboleia + " com a data "+data+" com a hora inicial " + horaini+" e a hora final " +horaf+" foi alterada.","");
+               InserirAlteracao("A boleia com o id " + idboleia + " com a data "+data+" com a hora inicial " + horaini+" e a hora final " +horaf+" foi alterada.","",1);
             }
         };
         xmlhttp.open("POST", "form_alterarboleia.php", true);
@@ -226,7 +226,7 @@
 
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    InserirAlteracao("A boleia com o id " + idboleia + " com a data "+data+" com a hora inicial " + horaini+" e a hora final " +horaf+" foi eliminada.","");
+                    InserirAlteracao("Foi eliminada a boleia com o id " + idboleia + " com a data "+data+" com a hora inicial " + horaini+" e a hora final " +horaf+".","",1);
                 }
             };
             xmlhttp.open("POST", "form_eliminarboleia.php", true);
@@ -284,7 +284,7 @@
                 } else if (vu == 2){
                     desc += " A viagem é só de volta.";
                 }
-                InserirAlteracao(desc,"");
+                InserirAlteracao(desc,"",1);
             }
         };
         xmlhttp.open("POST", "form_inserirpassageiro.php", true);
@@ -307,7 +307,7 @@
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                InserirAlteracao("O utilizador inseriu uma repetição a partir de "+dataini+" até " + dataf+" com a hora inicial "+ horaini + " e com a hora final " +horaf+ " para a boleia " +idboleia+".","");
+                InserirAlteracao("O utilizador inseriu uma repetição a partir de "+dataini+" até " + dataf+" com a hora inicial "+ horaini + " e com a hora final " +horaf+ " para a boleia " +idboleia+".","",1);
             }
         };
         xmlhttp.open("POST", "form_inserirrepeticao.php", true);
@@ -316,7 +316,7 @@
     }
 
 
-    function EliminarPassageiro(idboleia, idutilizador)
+    function EliminarPassageiro(idboleia, idutilizador, horaini,horaf,data)
     {
         if (confirm("Quer sair desta boleia?")) {
             str = "idboleia=" + idboleia + "&idutilizador=" + idutilizador;
@@ -333,7 +333,7 @@
 
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    location.reload();
+                    InserirAlteracao("O utilizador saiu da boleia "+idboleia+" com a data "+data+" com a hora inicial "+horaini+" e com a hora final " +horaf+".","",1);
                 }
             };
             xmlhttp.open("POST", "form_eliminarpassageiro.php", true);
@@ -357,7 +357,7 @@
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                location.reload();
+                InserirAlteracao("O utilizador criou uma boleia com a data "+data+" com a hora inicial "+horaini+" e com a hora final " +horaf+".","",1);
             }
         };
         xmlhttp.open("POST", "form_inserirboleiadata.php", true);
@@ -424,15 +424,6 @@
     }
     
     
-    function EliminarOpcao(idboleia, rep) {
-        if (rep == '') {
-            EliminarBoleia(idboleia);
-        } else if (confirm("Esta boleia faz parte de uma repetição. Quer eliminar todas as boleias associadas?")) {
-            EliminarRepeticao(idboleia, rep);
-        } else {
-            EliminarBoleia(idboleia);
-        }
-    }
     function MudarForm(form) {
             str = "form=" + form;
             var xmlhttp;
@@ -485,10 +476,11 @@
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                         var msg = xmlhttp.responseText.split("delimitador6/");
-                if (typeof msg[1] !== 'undefined') {
-                    document.getElementById("adminmsg").innerHTML = msg[1];
+                if (typeof msg[2] !== 'undefined') {
+                    document.getElementById("adminmsg").innerHTML = "Ocorreu um erro.";
                 } else {
                        document.getElementById("adminmsg").innerHTML = "Utilizador adicionado.";
+                       InserirAlteracao("Foi inserido o utilizador com o nome "+nome + "e com o email "+ email +".","",0);
                    }
                     }
                 };
@@ -519,7 +511,7 @@
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp.send("" + str);
         }
-      function EliminarUtilizador(idutilizador)
+      function EliminarUtilizador(idutilizador,nome)
     {
         if(idutilizador=="1"){
             alert("Não podes eliminar o administrador!");
@@ -543,7 +535,9 @@
                 if (typeof msg[2] !== 'undefined') {
                     document.getElementById("adminmsg").innerHTML = msg[2];
                 } else {
-                       document.getElementById("adminmsg").innerHTML = "Utilizador adicionado.";
+                       document.getElementById("adminmsg").innerHTML = "Utilizador eliminado.";
+                       InserirAlteracao("Foi eliminado o utilizador com o id "+idutilizador + " e com o nome "+ nome +".","",1);
+                       
                    }
                 }
             };
@@ -552,7 +546,7 @@
             xmlhttp.send("" + str);
         }
     }
-    function InserirAlteracao(descricao,nota){
+    function InserirAlteracao(descricao,nota,reload){
         var xmlhttp;
         str = "descricao="+descricao + "&nota="+nota;
         if (window.XMLHttpRequest)
@@ -566,11 +560,34 @@
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                alert(xmlhttp.responseText);
-                location.reload();
+                if(reload==1){
+                    location.reload();
+                }
             }
         };
         xmlhttp.open("POST", "form_inseriralteracao.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("" + str);
+    }
+    function ColocarEstatisticaUtilizadorMes(idutilizador,mes,ano,id){
+         var xmlhttp;
+        str = "idutilizador="+idutilizador + "&mes="+mes+"&ano="+ano;
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                x = xmlhttp.responseText.split("delimitador10/");
+                document.getElementById(id).innerHTML=x[2];
+            }
+        };
+        xmlhttp.open("POST", "form_estatisticautilizadormes.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send("" + str);
     }
@@ -749,7 +766,7 @@ function ColocarBoleia($id, $nome, $cor, $partida, $destino, $nlugares, $idbolei
             CriarPassageiro("pass$id", $idboleia, $horaini, $horaf, $data);
             echo " </td></tr>";
         } else if (!$colocar) {
-            echo "<tr><td><button style=\"color:black;\" onclick=EliminarPassageiro($idboleia," . $_SESSION['idutilizador'] . ")>Sair</button></td></tr>";
+            echo "<tr><td><button style=\"color:black;\" onclick=EliminarPassageiro($idboleia," . $_SESSION['idutilizador'] . ",'$horaini','$horaf','$data')>Sair</button></td></tr>";
         }
     }
     echo "<tr><td><button onclick=Aparecer('$id') style=\"color:black;\">Fechar</button></td></tr> </table> </div>";

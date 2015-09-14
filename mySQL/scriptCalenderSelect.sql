@@ -44,8 +44,12 @@ AND (
 )
 AND EM1.EventoValor >= UNIX_TIMESTAMP(CURDATE());
 
-select UNIX_TIMESTAMP(CURDATE()) from dual;
+select UNIX_TIMESTAMP(CURDATE()) from dual;passageirosdeboleiasInserirEstatistica
 
 select concat(week(curdate())) from dual;
 
 select concat(weekday('2015-06-09')) from dual;
+
+select sum(NCondutor),sum(NPassageiro),sum(NPessoasLevadas) from estatisticas where idutilizador=1 and month(mes)=9 and year(mes)=2015;
+
+select distinct year(mes) from estatisticas;

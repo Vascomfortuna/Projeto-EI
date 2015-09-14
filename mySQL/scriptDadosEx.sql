@@ -66,50 +66,113 @@ end//
 call InserirAlteracao('Isto e uma descricao e uma alteracao.', 1, 1, 'Ito e uma nota do utilizador a uma alteracao');
 call InserirUtilizador('teste','123','t@t.com',123456789,'t','#111111',1234,4,'t','t');
 drop trigger alt_ins_bol;
+drop trigger alt_upd_bol;
+drop trigger alt_del_bol;
+drop trigger alt_ins_pass;
+drop trigger alt_upd_pass;
+drop trigger alt_del_pass;
 delimiter //
 
 CREATE  TRIGGER alt_ins_bol after INSERT ON boleias
 for each row
 begin
-update utilizadores set NCondutor = NCondutor+1;
-call InserirAlteracao (concat(concat('Foi criada uma boleia na hora ',NEW.horainicio,' do dia '),NEW.Data), new.idutilizador, '');
+update utilizadores u set u.NCondutor = u.NCondutor+1 where u.idutilizador=new.idutilizador;
+call AtualizarEstatisticaPassageiro(new.idutilizador,new.data,0);
 end
 //
 Delimiter //
 CREATE TRIGGER alt_upd_bol after UPDATE ON boleias
 for each row
 if new.ativo=0 then
-call InserirAlteracao (concat(concat('Foi eliminada uma boleia na hora ',old.horainicio,' do dia '), old.Data), old.idutilizador, '');
+update utilizadores u set u.NCondutor = u.NCondutor-1 where u.idutilizador=new.idutilizador;
+call AtualizarEstatisticaPassageiro(new.idutilizador,new.data,1);
 end if;
 //
+Delimiter //
+CREATE TRIGGER alt_del_bol after delete ON boleias
+for each row
+begin
+update utilizadores set NCondutor = NCondutor-1;
+call AtualizarEstatisticaPassageiro(old.idutilizador,old.data,1);
+end;
+//
+
 
 delimiter //
 
 CREATE  TRIGGER alt_ins_pass after INSERT ON passageiros
 for each row
-BEgin
-declare d1 date;
-declare h1 time;
-declare c1 varchar(255);
-
-SET d1 := (SELECT data FROM boleias where idboleia=new.idboleia);
-SET h1 := (SELECT horainicio FROM boleias where idboleia=new.idboleia);
-SET c1 := (SELECT nome FROM utilizadores u join boleias b on u.idutilizador=b.idutilizador where idboleia=new.idboleia);
-call InserirAlteracao (concat(concat(concat('O utilizador entrou na boleia do condutor ',c1,' da hora '),h1, ' do dia '),d1), new.idutilizador, '');
-end
+begin
+declare d date;
+select b.data into d from boleias b join passageiros p on b.idboleia = p.idboleia where p.idutilizador=new.idutilizador;
+update utilizadores u set u.NPassageiro = u.NPassageiro+1 where u.idutilizador=new.idutilizador;
+call AtualizarEstatisticaPassageiro(new.idutilizador,d,0);
+end;
 //
 
+delimiter //
 CREATE  TRIGGER alt_upd_pass after update ON passageiros
 for each row
 BEgin
-declare d1 date;
-declare h1 time;
-declare c1 varchar(255);
+declare d date;
 if new.ativo=0 then
-SET d1 := (SELECT data FROM boleias where idboleia=new.idboleia);
-SET h1 := (SELECT horainicio FROM boleias where idboleia=new.idboleia);
-SET c1 := (SELECT nome FROM utilizadores u join boleias b on u.idutilizador=b.idutilizador where idboleia=new.idboleia);
-call InserirAlteracao (concat(concat(concat('O utilizador saiu da boleia do condutor ',c1,' da hora '),h1, ' do dia '),d1), new.idutilizador, '');
+select b.data into d from boleias b join passageiros p on b.idboleia = p.idboleia where p.idutilizador=new.idutilizador;
+update utilizadores u set u.NPassageiro = u.NPassageiro-1 where u.idutilizador=new.idutilizador;
+call AtualizarEstatisticaPassageiro(new.idutilizador,d,1);
 end if;
 end
 //
+
+delimiter //
+CREATE  TRIGGER alt_del_pass after delete ON passageiros
+for each row
+BEgin
+declare d date;
+select b.data into d from boleias b join passageiros p on b.idboleia = p.idboleia where p.idutilizador=old.idutilizador;
+update utilizadores u set u.NPassageiro = u.NPassageiro-1 where u.idutilizador=old.idutilizador;
+call AtualizarEstatisticaPassageiro(old.idutilizador,d,1);
+end
+//
+drop procedure AtualizarEstatisticaBoleia;
+delimiter //
+create procedure AtualizarEstatisticaBoleia(utilizador int(11),d date,mode int(1))
+begin
+declare id int;
+select idutilizador into id from estatisticas where d=mes;
+if mode = 0 then
+if id is null then
+	insert into estatisticas(idutilizador,mes,ncondutor) values (utilizador,d,1);
+    else
+    update estatisticas set ncondutor=ncondutor+1 where mes = d;
+    end if;
+    else
+    update estatisticas set ncondutor=ncondutor-1 where mes = d;
+    end if;
+end//
+drop procedure AtualizarEstatisticaPassageiro;
+delimiter //
+create procedure AtualizarEstatisticaPassageiro(utilizador int(11),d date,mode int(1))
+begin
+declare id int;
+select idutilizador into id from estatisticas where d=mes;
+if mode = 0 then
+if id is null then
+	insert into estatisticas(idutilizador,mes,NPassageiro) values (utilizador,d,1);
+    else
+    update estatisticas set npassageiro=npassageiro+1 where mes = d;
+    end if;
+    else
+    update estatisticas set npassageiro=npassageiro-1 where mes = d;
+    end if;
+end//
+
+
+
+
+delimiter //
+CREATE  TRIGGER alt_est_pass0 after insert ON passageiros
+for each row
+BEgin
+
+end //
+
