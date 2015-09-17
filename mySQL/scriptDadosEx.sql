@@ -77,7 +77,7 @@ CREATE  TRIGGER alt_ins_bol after INSERT ON boleias
 for each row
 begin
 update utilizadores u set u.NCondutor = u.NCondutor+1 where u.idutilizador=new.idutilizador;
-call AtualizarEstatisticaPassageiro(new.idutilizador,new.data,0);
+call AtualizarEstatisticaBoleia(new.idutilizador,new.data,0);
 end
 //
 Delimiter //
@@ -85,7 +85,7 @@ CREATE TRIGGER alt_upd_bol after UPDATE ON boleias
 for each row
 if new.ativo=0 then
 update utilizadores u set u.NCondutor = u.NCondutor-1 where u.idutilizador=new.idutilizador;
-call AtualizarEstatisticaPassageiro(new.idutilizador,new.data,1);
+call AtualizarEstatisticaBoleia(new.idutilizador,new.data,1);
 end if;
 //
 Delimiter //
@@ -93,7 +93,7 @@ CREATE TRIGGER alt_del_bol after delete ON boleias
 for each row
 begin
 update utilizadores set NCondutor = NCondutor-1;
-call AtualizarEstatisticaPassageiro(old.idutilizador,old.data,1);
+call AtualizarEstatisticaBoleia(old.idutilizador,old.data,1);
 end;
 //
 
@@ -104,9 +104,11 @@ CREATE  TRIGGER alt_ins_pass after INSERT ON passageiros
 for each row
 begin
 declare d date;
-select b.data into d from boleias b join passageiros p on b.idboleia = p.idboleia where p.idutilizador=new.idutilizador;
-update utilizadores u set u.NPassageiro = u.NPassageiro+1 where u.idutilizador=new.idutilizador;
+declare c int;
+select b.data, b.idutilizador into d, c from boleias b join passageiros p on b.idboleia = p.idboleia where p.idboleia=new.idboleia;
 call AtualizarEstatisticaPassageiro(new.idutilizador,d,0);
+update utilizadores u set u.NPessoasLevadas = u.NPessoasLevadas+1 where u.idutilizador=c;
+update utilizadores u set u.NPassageiro = u.NPassageiro+1 where u.idutilizador=new.idutilizador;
 end;
 //
 
@@ -115,10 +117,13 @@ CREATE  TRIGGER alt_upd_pass after update ON passageiros
 for each row
 BEgin
 declare d date;
+declare c int;
 if new.ativo=0 then
-select b.data into d from boleias b join passageiros p on b.idboleia = p.idboleia where p.idutilizador=new.idutilizador;
-update utilizadores u set u.NPassageiro = u.NPassageiro-1 where u.idutilizador=new.idutilizador;
+select b.data, b.idutilizador into d, c from boleias b join passageiros p on b.idboleia = p.idboleia where p.idboleia=new.idboleia;
 call AtualizarEstatisticaPassageiro(new.idutilizador,d,1);
+update utilizadores u set u.NPessoasLevadas = u.NPessoasLevadas+1 where u.idutilizador=c;
+update utilizadores u set u.NPassageiro = u.NPassageiro-1 where u.idutilizador=new.idutilizador;
+
 end if;
 end
 //
@@ -128,9 +133,11 @@ CREATE  TRIGGER alt_del_pass after delete ON passageiros
 for each row
 BEgin
 declare d date;
-select b.data into d from boleias b join passageiros p on b.idboleia = p.idboleia where p.idutilizador=old.idutilizador;
-update utilizadores u set u.NPassageiro = u.NPassageiro-1 where u.idutilizador=old.idutilizador;
+declare c int;
+select b.data, b.idutilizador into d, c from boleias b join passageiros p on b.idboleia = p.idboleia where p.idboleia=old.idboleia;
 call AtualizarEstatisticaPassageiro(old.idutilizador,d,1);
+update utilizadores u set u.NPessoasLevadas = u.NPessoasLevadas+1 where u.idutilizador=c;
+update utilizadores u set u.NPassageiro = u.NPassageiro-1 where u.idutilizador=old.idutilizador;
 end
 //
 drop procedure AtualizarEstatisticaBoleia;
@@ -138,7 +145,7 @@ delimiter //
 create procedure AtualizarEstatisticaBoleia(utilizador int(11),d date,mode int(1))
 begin
 declare id int;
-select idutilizador into id from estatisticas where d=mes;
+select distinct idutilizador into id from estatisticas where d=mes;
 if mode = 0 then
 if id is null then
 	insert into estatisticas(idutilizador,mes,ncondutor) values (utilizador,d,1);
@@ -151,19 +158,23 @@ if id is null then
 end//
 drop procedure AtualizarEstatisticaPassageiro;
 delimiter //
-create procedure AtualizarEstatisticaPassageiro(utilizador int(11),d date,mode int(1))
+create procedure AtualizarEstatisticaPassageiro(utilizador int(11),idb int(11),d date,mode int(1))
 begin
 declare id int;
+declare c int;
+select b.idutilizador into c from boleias b join passageiros p on b.idboleia = p.idboleia where p.idutilizador=idb;
 select idutilizador into id from estatisticas where d=mes;
 if mode = 0 then
-if id is null then
-	insert into estatisticas(idutilizador,mes,NPassageiro) values (utilizador,d,1);
+	if id is null then
+		insert into estatisticas(idutilizador,mes,NPassageiro) values (utilizador,d,1);
     else
-    update estatisticas set npassageiro=npassageiro+1 where mes = d;
-    end if;
-    else
-    update estatisticas set npassageiro=npassageiro-1 where mes = d;
-    end if;
+		update estatisticas set npassageiro=npassageiro+1 where mes = d;
+	end if;
+    update estatisticas set NPessoasLevadas= NPessoasLevadas+1 where idutilizador = c and mes = d;
+else
+	update estatisticas set npassageiro=npassageiro-1 where mes = d;
+    update estatisticas set NPessoasLevadas= NPessoasLevadas-1 where idutilizador = c and mes = d;
+end if;
 end//
 
 

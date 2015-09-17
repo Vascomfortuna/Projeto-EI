@@ -44,7 +44,7 @@ AND (
 )
 AND EM1.EventoValor >= UNIX_TIMESTAMP(CURDATE());
 
-select UNIX_TIMESTAMP(CURDATE()) from dual;passageirosdeboleiasInserirEstatistica
+select CURDATE() from dual;
 
 select concat(week(curdate())) from dual;
 
@@ -53,3 +53,15 @@ select concat(weekday('2015-06-09')) from dual;
 select sum(NCondutor),sum(NPassageiro),sum(NPessoasLevadas) from estatisticas where idutilizador=1 and month(mes)=9 and year(mes)=2015;
 
 select distinct year(mes) from estatisticas;
+
+call InserirBoleiaS('2015-09-14','08:00:00','08:30:00',1);
+
+delete from estatisticas;
+
+update utilizadores set ncondutor =0, NPassageiro=0;
+
+call InserirPassgeiro(3,185,'',0);
+
+select b.data, b.idutilizador from boleias b join passageiros p on b.idboleia = p.idboleia where p.idboleia=184;
+
+Select u.email from utilizadores u join passageiros p on u.idutilizador=p.idutilizador where p.idboleia=185;
