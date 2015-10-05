@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+    error_reporting(0);
+    session_start(); 
+?>
 <script>
 
     function Login(email, password)
@@ -20,7 +23,7 @@
                 if (typeof msg[2] !== 'undefined') {
                     document.getElementById("msg").innerHTML = msg[2];
                 } else {
-                    window.location = "./mapaboleia.php";
+                    location.reload();
                 }
             }
         };
@@ -130,10 +133,13 @@
         xmlhttp.send("" + str);
     }
 
-    function MapaBoleia(data)
+    function MapaBoleia(data,filtro)
     {
         if (typeof data != "undefined") {
             document.cookie = "d=" + data;
+        }
+        if (typeof filtro != "undefined") {
+            document.cookie = "f=" + filtro;
         }
         var xmlhttp;
         if (window.XMLHttpRequest)
@@ -182,7 +188,7 @@
         horaini = "" + document.getElementById("horaini" + id).value + document.getElementById("minini" + id).value;
         horaf = "" + document.getElementById("horaf" + id).value + document.getElementById("minf" + id).value;
         str = "idboleia=" + idboleia + "&partida=" + document.getElementById("p" + id).value + "&destino=" + document.getElementById("d" + id).value
-                + "&horaini=" + horaini + "&horaf=" + horaf + "&nlugares=" + document.getElementById("nl" + id).value;
+                + "&horaini=" + horaini + "&horaf=" + horaf + "&nlugares=" + document.getElementById("nl" + id).value+"&data="+data;
         if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -194,6 +200,8 @@
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                 msg2 = xmlhttp.responseText.split("delimitador110/");
+               alert(msg2[2]);
                InserirAlteracao("A boleia com o id " + idboleia + " com a data "+data+" com a hora inicial " + horaini+" e a hora final " +horaf+" foi alterada.","",1);
             }
         };
@@ -561,7 +569,11 @@
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 if(reload==1){
+                    if(document.getElementById("divmapa")==null){
                     location.reload();
+                }else{
+                    MapaBoleia();
+                }
                 }
             }
         };
@@ -689,7 +701,7 @@ function DadosBoleia($idboleia, $iniciais,$cor) {
         }
                 $pass.= "</label></td></tr>";
     }
-    echo "<table class=\"table-bordered\" style=\"width:100%; color:".  Contraste($cor).";\" align=\"center\">"
+    echo "<table class=\"table-condensed\" style=\"background-color:$cor; width:100%; color:".  Contraste($cor).";\" align=\"center\">"
     . "<tr><th><label>Condutor: $iniciais</label></th></tr>"
     . "$pass"
     . "</table>";
@@ -832,24 +844,37 @@ function BuscarUtilizador($idutilizador) {
     }
 }
 
-function BuscarBoleias($dia, $horai, $horaf, $dsemana, $sobre) {
+function BuscarBoleias($dia, $horai, $horaf, $dsemana, $sobre,$filtro) {
     if ($sobre == 0) {
         $bboleias = "select b.data,b.horainicio,b.horafim,b.nlugares,b.partida,b.destino,u.idutilizador,u.nome,u.iniciais,u.cor,b.idboleia,b.boleias_idboleia from boleias b "
-                . "inner join utilizadores u on b.idutilizador=u.idutilizador "
-                . "where b.data='$dia' "
+                . "inner join utilizadores u on b.idutilizador=u.idutilizador ";
+                if($filtro=="1"){
+                    $bboleias.="left join passageiros p on b.idboleia=p.idboleia ";
+                }
+           $bboleias.= "where b.data='$dia' "
                 . "and '$horai'>=b.horainicio "
                 . "and '$horaf'<=b.horafim "
                 . "and $dsemana=b.diasemana "
-                . "and b.ativo=1 "
-                . "order by b.horainicio asc";
+                . "and b.ativo=1 ";
+        if($filtro=="1"){
+            $bboleias.= " and (b.idutilizador=".$_SESSION['idutilizador']." or (p.idutilizador=".$_SESSION['idutilizador']." and p.ativo=1))";
+        }
+                $bboleias.= " order by b.horainicio asc";
     } else {
         $bboleias = "select b.data,b.horainicio,b.horafim,b.nlugares,b.partida,b.destino,u.idutilizador,u.nome,u.iniciais,u.cor,b.idboleia,b.boleias_idboleia from boleias b "
-                . "inner join utilizadores u on b.idutilizador=u.idutilizador " . "where b.data='$dia' "
+                . "inner join utilizadores u on b.idutilizador=u.idutilizador ";
+                if($filtro=="1"){
+                    $bboleias.="left join passageiros p on b.idboleia=p.idboleia ";
+                }
+                $bboleias.= "where b.data='$dia' "
                 . "and '$horai'<=b.horainicio "
                 . "and '$horaf'>b.horainicio " .
                 "and $dsemana=b.diasemana "
-                . "and b.ativo=1 " .
-                " order by b.horainicio"
+                . "and b.ativo=1 ";
+                if($filtro=="1"){
+             $bboleias.= " and (b.idutilizador=".$_SESSION['idutilizador']." or (p.idutilizador=".$_SESSION['idutilizador']." and p.ativo=1))";
+        }
+                $bboleias.=" order by b.horainicio"
                 . " asc limit 1,18446744073709551615";
     }
     $result = ligacao($bboleias);

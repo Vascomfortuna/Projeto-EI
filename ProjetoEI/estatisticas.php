@@ -4,7 +4,12 @@
         <title>Car Pooling</title>
     </head>
     <body>
-       <?php include './masterpage.php';?>
+        <?php
+       session_start();
+        if(!isset($_SESSION['idutilizador'])){
+            include './login.php';
+        }else{ 
+       include './masterpage.php';?>
         <div class="container" style="margin-top: 10px;">
             <table class="table table-bordered">
                 <tr><th>
@@ -44,5 +49,6 @@
                 </table>
         </div>
         <div id="divUtiMes" class="container"></div>
+        <?php }?>
     </body>
 </html>

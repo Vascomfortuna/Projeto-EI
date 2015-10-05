@@ -4,7 +4,11 @@
     </head>
     <body>
         
-        <?php  
+        <?php 
+        session_start();
+        if(!isset($_SESSION['idutilizador'])){
+            include './login.php';
+        }else{
        include './masterpage.php';
        error_reporting(0);
        ?>
@@ -13,7 +17,7 @@
             <tr><td><div id="divmsg"></div></td></tr>
             <tr>
                 <td>Nome:</td>
-                <td><input id="nome" type="text" width="20px" value="<?php echo $_SESSION['nome']?>"/></td>
+                <td><input id="nome" type="text" width="20px" value="<?php echo utf8_decode($_SESSION['nome'])?>"/></td>
             </tr>
             <tr>
                 <td>Iniciais:</td>
@@ -53,6 +57,7 @@
             </tr>
         </table>
         </div>
+        <?php }?>
            </body>
 </html>
 

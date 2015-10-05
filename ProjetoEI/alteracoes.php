@@ -5,6 +5,10 @@
     </head>
     <body>
 <?php
+session_start();
+        if(!isset($_SESSION['idutilizador'])){
+            include './login.php';
+        }else{
 include "./masterpage.php";
     $alteracoes = "select a.descricao,a.dataalteracao,a.nota,u.nome from alteracoes a join utilizadores u on a.idutilizador = u.idutilizador order by a.idalteracao desc limit 100";
     try {
@@ -25,7 +29,8 @@ include "./masterpage.php";
         
     } catch (PDOException $e) {
         die($e);
-    }?>
+    }
+        }?>
     </body>
 </html>
 

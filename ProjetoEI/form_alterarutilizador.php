@@ -40,20 +40,22 @@ $query = "UPDATE utilizadores SET partida='$partida', destino='$destino', contac
         . "where email = '$email' and password='$password';";
 
 $result = ligacao($query);
+$count = $result->rowCount();
+if($count==0) {
+    echo "delimitador2/Password errada.";
+}
 if (!$result) {
             echo "<br/>Ocorreu um erro na query<br/>";
             echo 'MySQL Error: ' . mysql_error();
             exit;
         }else{
-            echo "sucess;";
+            echo "delimitador2/Alteração efetuada.;";
         }
 
 if(($result) == false){
-    echo "delimitador2/Login ou password errados.";
+    echo "delimitador2/Password errada.";
     exit;
 }   else{    
-
-
         $_SESSION["nome"] = utf8_encode ($nome);
         $_SESSION["iniciais"] = $iniciais;
         $_SESSION["cor"] = $cor;

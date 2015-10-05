@@ -4,6 +4,7 @@ include './functions.php';
 $nPara = 12;
 $dias = array(0, 0, 0, 0, 0, 0);
 $startdate = filter_input(INPUT_COOKIE, "d");
+$filtro = filter_input(INPUT_COOKIE, "f");
 date_default_timezone_set("Portugal");
 if ($startdate == null) {
     $startdate = strtotime("Monday");
@@ -17,7 +18,7 @@ if ($startdate == null) {
 
 
     <table class="table table-bordered table-condensed mapaboleia">
-        <tr><td colspan="7"><h2>Mapa da semana <?php echo date("M d", $startdate) . " - " . date("M d", strtotime("+1 week", $startdate)); ?></h2></td></tr>
+        <tr><td colspan="7"><h2>Mapa da semana <?php echo date("M d", $startdate) . " - " . date("M d", strtotime("+6 days", $startdate)); ?></h2></td></tr>
         <tr>
             <th>Hora</th>
             <?php
@@ -59,7 +60,7 @@ if ($startdate == null) {
                         //Vai buscar primeira boleia
                         $boleia = explode(",", BuscarBoleias(
                                         $dia, $haux1, $haux2
-                                        , $diasemana, 0), -1);
+                                        , $diasemana, 0,$filtro), -1);
 
                         //Se encontrar boleias
                         if (empty($boleia)) {
@@ -69,7 +70,7 @@ if ($startdate == null) {
                             //Vai buscar boleias sobrepostas
                             $sobre = explode(",", BuscarBoleias(
                                             $dia, $haux1, $boleia[1]
-                                            , $diasemana, 1), -1);
+                                            , $diasemana, 1,$filtro), -1);
                             //Se encontrar sobrepostas
                             if (!empty($sobre)) {
                                 $len = (count($sobre) / $nPara);

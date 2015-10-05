@@ -4,7 +4,12 @@
         <title>Car Pooling</title>
     </head>
     <body>
-<?php include './masterpage.php'; ?>
+<?php 
+session_start();
+        if(!isset($_SESSION['idutilizador'])||$_SESSION['idutilizador']!=1){
+           echo "acesso negado";
+        }else{
+include './masterpage.php'; ?>
         <div class="container" style="float:left;">
 
             <h2>Opções</h2>
@@ -20,4 +25,6 @@
         <div id="adminform" class="container" style="vertical-align: bottom;float:left;">
 
         </div>
+        <?php }?>
+    </body>
 </html>

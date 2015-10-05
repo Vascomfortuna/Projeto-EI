@@ -14,13 +14,13 @@ $query = "select idutilizador from passageiros where idboleia=$idboleia and idut
 
 $result = ligacao($query);
     $r = "";
-    while ($row = mysql_fetch_assoc($result)) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $r.= $row['idutilizador'];
     }
 if (empty($r)) {
 
     $query2 = "insert into passageiros (idutilizador,idboleia,nota,ViagemUnica) "
-            . "VALUES ('$idutilizador','$idboleia',$nota,$vu)";
+            . "VALUES ($idutilizador,$idboleia,'$nota',$vu)";
     echo $query2;
     $result2 = ligacao($query2);
     if (!$result2) {
@@ -31,10 +31,10 @@ if (empty($r)) {
         echo "sucess;";
     }
 } else {
-    $query2 = "update passageiros SET ativo = 1, nota=$nota , ViagemUnica=$vu where "
+    $query3 = "update passageiros SET ativo = 1, nota=$nota , ViagemUnica=$vu where "
             . " idutilizador=$idutilizador and idboleia=$idboleia";
-    $result2 = ligacao($query2);
-    if (!$result2) {
+    $result3 = ligacao($query3);
+    if (!$result3) {
         echo "<br/>Ocorreu um erro na query3<br/>";
         echo 'MySQL Error: ' . mysql_error();
         exit;
