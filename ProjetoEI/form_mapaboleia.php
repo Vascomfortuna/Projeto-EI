@@ -91,11 +91,11 @@ if ($startdate == null) {
                                 }
                                 $he1 = ContarEspacos($haux1, $boleia[1]) * 55;
                                 $he2 = ContarEspacos($sobre[0 + $cont], $sobre[1 + $cont]) * 55;
-                                $w = (50 * ($len + 1));
+                                $w = (35 * ($boleia[7]));
                                 echo"<td rowspan=\"$rown\">" .
                                 "<table class=\"table-bordered\" ><tr><td class=\"vtop\">";
                                 echo"<div  class=\"espaco\" onclick=\"Aparecer('hid$z')\" style=\"height:$he1" . "px; width:$w" . "px; background-color:$boleia[4]\" >";
-                                DadosBoleia($boleia[8], $boleia[2], $boleia[4]);
+                                DadosBoleia($boleia[8], $boleia[2], $boleia[4],1);
                                 echo "</div>";
                                 ColocarBoleia("hid$z", $boleia[3], $boleia[4], $boleia[5], $boleia[6], $boleia[7], $boleia[8], $boleia[9], $boleia[0], $boleia[1], $boleia[10],$boleia[11]);
 
@@ -108,7 +108,7 @@ if ($startdate == null) {
                                     . $sobre[4 + $cont]
                                     . "\" onclick=\"Aparecer('hid$z')"
                                     . "\">";
-                                    DadosBoleia($sobre[8 + $cont], $sobre[2 + $cont], $sobre[4 + $cont]);
+                                    DadosBoleia($sobre[8 + $cont], $sobre[2 + $cont], $sobre[4 + $cont],1);
                                     echo "</div>";
                                     ColocarBoleia("hid$z", $sobre[3 + $cont], $sobre[4 + $cont], $sobre[5 + $cont], $sobre[6 + $cont], $sobre[7 + $cont], $sobre[8 + $cont], $sobre[9 + $cont], $sobre[0 + $cont], $sobre[1 + $cont], $sobre[10 + $cont], $sobre[11 + $cont]);
                                     $z++;
@@ -125,9 +125,9 @@ if ($startdate == null) {
                                 if ($rown > 1) {
                                     $dias[$i] = $rown - 1;
                                 }
-                                echo"<td rowspan=\"$rown\">"
-                                . "<div class=\"espaco\" onclick=\"Aparecer('hid$z')\" style=\"height:$he1" . "px; background-color:$boleia[4]\" >";
-                                DadosBoleia($boleia[8], $boleia[2], $boleia[4]);
+                                echo"<td rowspan=\"$rown\" style=\"height:$he1" . "px; background-color:$boleia[4]\" >"
+                               . "<div class=\"espaco\" onclick=\"Aparecer('hid$z')\" style=\"height:$he1" . "px; background-color:$boleia[4]\" >";
+                                DadosBoleia($boleia[8], $boleia[2], $boleia[4],0);
                                 echo "</div>";
                                 ColocarBoleia("hid$z", $boleia[3], $boleia[4], $boleia[5], $boleia[6], $boleia[7], $boleia[8], $boleia[9], $boleia[0], $boleia[1], $boleia[10], $boleia[11]);
                             }

@@ -4,7 +4,7 @@ include "./functions.php";
 $idutilizador = filter_input(INPUT_POST, "idutilizador");
 $email = filter_input(INPUT_POST, "email");
 $password = filter_input(INPUT_POST, "password");
-$nome = utf8_decode(filter_input(INPUT_POST, "nome"));
+$nome = filter_input(INPUT_POST, "nome");
 $contacto = filter_input(INPUT_POST, "contacto");
 $iniciais = filter_input(INPUT_POST, "iniciais");
 $voip = filter_input(INPUT_POST, "voip");

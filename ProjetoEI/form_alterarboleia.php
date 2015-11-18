@@ -31,7 +31,7 @@ if (!$result2) {
     echo "<br/>Ocorreu um erro na query<br/>";
     echo 'MySQL Error: ' . mysql_error();
     exit;
-} else {
+} else {/*
     
 $smtp = Mail::factory('smtp', array(
             'host' => 'ssl://smtp.gmail.com',
@@ -58,7 +58,16 @@ $smtp = Mail::factory('smtp', array(
         } else {
             echo('<p>Message successfully sent!</p>');
         }
-    }
+    }*/
+echo "email";   
+$to = "vascomfortuna@gmail.com";
+$subject = "My subject";
+$txt = "Hello world!";
+$headers = "From: projetocarpooling@gmail.com" /* . "\r\n" .
+"CC: somebodyelse@example.com"*/;
+
+mail($to,$subject,$txt,$headers);
+
 }
         
 

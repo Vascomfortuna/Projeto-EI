@@ -13,7 +13,10 @@
                 <form method="POST" action="">
 
                     <div class="col-xs-4 col-sm-2 text-center"><h1>Car Pooling</h1></div>
-                    <div class="col-xs-10  col-sm-6"></div>
+                    <div class="col-xs-10  col-sm-10"><?php if((isset($_SESSION['idutilizador']))&&(isset($_SESSION['nome']))){ 
+                        echo "<h3 style='float:right;'>Bem-vindo, ".utf8_decode($_SESSION['nome']).".</h3>";
+                    }
+                    ?></div>
                    <!-- <div class="col-xs-6  col-sm-4 "><br/><input type="text" name="pesqText">
                         <select name="pesqOption">
                             <option value="m">Membros</option>

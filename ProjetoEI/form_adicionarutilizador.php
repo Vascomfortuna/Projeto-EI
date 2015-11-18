@@ -1,6 +1,6 @@
 <?php
 include "./functions.php";
-$nome=utf8_decode(filter_input(INPUT_POST, "nome"));
+$nome=utf8_encode(filter_input(INPUT_POST, "nome"));
 $password=filter_input(INPUT_POST, "password");
 $email=filter_input(INPUT_POST, "email");
 $contacto=filter_input(INPUT_POST, "contacto");

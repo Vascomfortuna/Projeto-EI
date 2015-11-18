@@ -20,7 +20,7 @@ $result = ligacao($query);
 if (empty($r)) {
 
     $query2 = "insert into passageiros (idutilizador,idboleia,nota,ViagemUnica) "
-            . "VALUES ($idutilizador,$idboleia,'$nota',$vu)";
+            . "VALUES ($idutilizador,$idboleia,$nota,$vu)";
     echo $query2;
     $result2 = ligacao($query2);
     if (!$result2) {
