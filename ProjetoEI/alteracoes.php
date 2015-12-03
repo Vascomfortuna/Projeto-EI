@@ -22,8 +22,7 @@ include "./masterpage.php";
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {   
 ?>
         <table class="table table-bordered" style="margin-bottom: 10px; margin-top: 10px;">
-            <tr><td><b>Data: </b><?php echo $row['dataalteracao'];?></td><td><b>Nome: </b><?php echo $row['nome'];?></td></tr>
-            <tr><td colspan="2"><b>Descrição: </b><?php echo $row['descricao'];?></td></tr>
+            <tr><td width="150px"><b>Data: </b><?php echo $row['dataalteracao'];?></td><td><b> Descrição: </b><?php echo $row['nome'];echo $row['descricao'];?></td></tr>
         </table>
     <?php }
         

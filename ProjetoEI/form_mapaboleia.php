@@ -35,7 +35,7 @@ if ($startdate == null) {
         </tr>
         <?php
         $z = 0;
-        for ($x = 7; $x <= 22; $x++) {
+        for ($x = 9; $x <= 22; $x++) {
             $h1 = strtotime("$x:00");
             $h2 = strtotime("$x:30");
             $h3 = strtotime(($x + 1) . ":00");
@@ -82,18 +82,21 @@ if ($startdate == null) {
                                         $aux = ContarEspacos($haux1, $boleia[1]);
                                     }
                                     if ($aux > $rown) {
+                                        //$rown é número de colunas que tabela de sobrpostas vai ocupar
                                         $rown = $aux;
                                     }
+                                    //rownstart= onde comeca o boleia/rownend= altura da célula da boleia
                                     $rownstart[$j] = ContarEspacos($haux1, $sobre[0 + $cont]);
+                                    $rownend[$j] = ContarEspacos($sobre[0 + $cont], $sobre[1 + $cont]);
                                 }
                                 if ($rown > 1) {
                                     $dias[$i] = $rown - 1;
                                 }
                                 $he1 = ContarEspacos($haux1, $boleia[1]) * 55;
-                                $he2 = ContarEspacos($sobre[0 + $cont], $sobre[1 + $cont]) * 55;
-                                $w = (35 * ($boleia[7]));
+                                //$he2 = ContarEspacos($sobre[0 + $cont], $sobre[1 + $cont]) * 55;
+                                $w = (20* ($boleia[7]));
                                 echo"<td rowspan=\"$rown\">" .
-                                "<table class=\"table-bordered\" ><tr><td class=\"vtop\">";
+                                "<table class=\"table-bordered\"><tr><td class=\"vtop\">";
                                 echo"<div  class=\"espaco\" onclick=\"Aparecer('hid$z')\" style=\"height:$he1" . "px; width:$w" . "px; background-color:$boleia[4]\" >";
                                 DadosBoleia($boleia[8], $boleia[2], $boleia[4],1);
                                 echo "</div>";
@@ -104,7 +107,7 @@ if ($startdate == null) {
                                 for ($t = 0; $t < $len; $t++) {
                                     $cont = ($nPara * $t);
                                     echo "<td class=\"vtop\" ><div style=\"width:$w" . "px; height:" . ($rownstart[$t] * 55) . "px\"></div>";
-                                    echo "<div class=\"espaco\" style=\"width:$w" . "px; height:$he2" . "px; background-color:"
+                                    echo "<div class=\"espaco\" style=\"width:$w" . "px; height:".($rownend[$t]*55) . "px; background-color:"
                                     . $sobre[4 + $cont]
                                     . "\" onclick=\"Aparecer('hid$z')"
                                     . "\">";

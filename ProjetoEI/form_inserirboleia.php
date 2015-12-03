@@ -3,8 +3,7 @@ include "./functions.php";
 $hora = date("H:i:s",strtotime(filter_input(INPUT_POST, "hora")));
 $horaf = date('H:i:s',strtotime("+30 minutes", strtotime($hora)));
 $dia = filter_input(INPUT_POST, "dia");
-$query = "insert into boleias (horainicio,horafim,data,idUtilizador,DiaSemana) "
-        . "VALUES ('$hora','$horaf','$dia',".$_SESSION['idutilizador'].",dayofweek('$dia'))";
+$query = "call InserirBoleiaS('$dia','$hora','$horaf',".$_SESSION['idutilizador'].")";
 $result = ligacao($query);
 if (!$result) {
             echo "<br/>Ocorreu um erro na query<br/>";

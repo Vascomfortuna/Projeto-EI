@@ -1,6 +1,9 @@
 <?php
-
+include 'functions.php';
 require_once "Mail.php";
+/*
+enviarEmail("vascomfortuna@gmail.com", "debug", "debug");
+echo "email";
 
 // Dados de autenticação SMTP
 /*$smtpinfo['host'] = 'ssl://smtp.gmail.com';
@@ -8,7 +11,7 @@ $smtpinfo['port'] = '465';
 $smtpinfo['auth'] = true;
 $smtpinfo['username'] = 'projetocarpooling@gmail.com'; /* Altere este campo para o email do seu domínio 
 $smtpinfo['password'] = '621d2d621d2d'; /* Altere este campo para a password do email */
-$smtpinfo = array(
+/*$smtpinfo = array(
             'host' => 'ssl://smtp.gmail.com',
             'port' => '465',
             'auth' => true,
@@ -34,5 +37,5 @@ echo $mail->getMessage();
 echo '<b>Mensagem enviada!</b>';
 }
 
-
+*/
 

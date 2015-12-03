@@ -9,6 +9,7 @@ $data = date("d-m-Y", strtotime(filter_input(INPUT_POST, "data")));
 $horaini = date("H:i:s", strtotime(filter_input(INPUT_POST, "horaini")));
 $horaf = date("H:i:s", strtotime(filter_input(INPUT_POST, "horaf")));
 $nlugares = filter_input(INPUT_POST, "nlugares");
+$em = filter_input(INPUT_POST, "em");
 
 $r = "";
 if (empty($nlugares)) {
@@ -24,6 +25,7 @@ if (!$result) {
 } else {
     echo "sucess;";
 }
+if($em=="true"){
 $query2 = "Select u.email from utilizadores u join passageiros p on u.idutilizador=p.idutilizador where p.idboleia=$idboleia";
 $result2 = ligacao($query2);
 echo "delimitador110/";
@@ -31,8 +33,23 @@ if (!$result2) {
     echo "<br/>Ocorreu um erro na query<br/>";
     echo 'MySQL Error: ' . mysql_error();
     exit;
-} else {/*
-    
+} else {
+    while ($row2 = $result2->fetch(PDO::FETCH_ASSOC)) {
+        $r.= $row2['email'] . ",";
+    }
+    $u = explode(",", $r,-1);
+    $subject="Alteração de boleia do dia $data";
+    $body = "A sua boleia do dia $data foi alterada. A sua hora de partida é $horaini e a sua hora de chegada é $horaf.";
+    if($partida!=""){
+        $body+="A sua partida é $partida.";
+    }
+    if($destino!=""){
+        $body+="O seu destino é $destino.";
+    }
+    for ($i = 0; $i < sizeof($u); $i++) {
+        enviarEmail($u[$i],$subject, $body);
+    }
+    /*
 $smtp = Mail::factory('smtp', array(
             'host' => 'ssl://smtp.gmail.com',
             'port' => '465',
@@ -60,16 +77,8 @@ $smtp = Mail::factory('smtp', array(
         }
     }*/
 echo "email";   
-$to = "vascomfortuna@gmail.com";
-$subject = "My subject";
-$txt = "Hello world!";
-$headers = "From: projetocarpooling@gmail.com" /* . "\r\n" .
-"CC: somebodyelse@example.com"*/;
-
-mail($to,$subject,$txt,$headers);
-
 }
-        
+}        
 
 
 

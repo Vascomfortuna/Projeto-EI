@@ -3,10 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp2/htdocs/ProjetoEI/mapaboleia.php</file>
-            <file>file:/C:/xampp2/htdocs/ProjetoEI/form_login.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/form_mapaboleia.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/form_alterarboleia.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/login.php</file>
             <file>file:/C:/xampp2/htdocs/ProjetoEI/form_inserirrepeticao.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/smtp.php</file>
             <file>file:/C:/xampp2/htdocs/ProjetoEI/functions.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/mapaboleia.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/styles.css</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/form_inserirboleia.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/form_login.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/masterpage.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/form_alterarutilizador.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/mailteste.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/alteracoes.php</file>
+            <file>file:/C:/xampp2/htdocs/ProjetoEI/form_eliminarrepeticao.php</file>
         </group>
     </open-files>
 </project-private>
